@@ -72,3 +72,8 @@ data class AllReviewDetailsState(
     val data: List<ReviewDetails> = emptyList(),
     val isloading: Boolean=false
 )
+data class SearchProductState(
+    val error: String="",
+    val data: List<Product> = emptyList(),
+    val isloading: Boolean=false
+)

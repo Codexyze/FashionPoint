@@ -306,5 +306,19 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
             close()
         }
     }
+    suspend fun searchProduct(search:String):Flow<ResultState<List<Product>>> = callbackFlow {
+        trySend(ResultState.Loading)
+        firebaseinstance.collection(Constants.PRODUCT).whereEqualTo("name",search).get().addOnSuccessListener {
+            val data = it.documents.mapNotNull {
+                it.toObject(Product::class.java)
+            }
+            trySend(ResultState.Sucess(data))
+        }.addOnFailureListener {
+            trySend(ResultState.Error(it.message.toString()))
+        }
+        awaitClose {
+            close()
+        }
+    }
 }
 

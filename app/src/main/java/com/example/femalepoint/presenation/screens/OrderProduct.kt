@@ -216,6 +216,7 @@ fun OrderProductScreen(
 
 
                     }
+                    Spacer(modifier = Modifier.height(180.dp))
                 }
             }
         }

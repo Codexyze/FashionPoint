@@ -1,22 +1,25 @@
 package com.example.femalepoint.navigation
 
 import android.util.Log
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -41,7 +44,7 @@ import com.example.femalepoint.presenation.screens.SingUpScreen
 
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.launch
+
 
 @Composable
 fun HomeScreen(viewModel: MyViewModel= hiltViewModel()) {
@@ -63,7 +66,8 @@ LaunchedEffect(auth) {
             LoginScreen(navController=navController)
         }
         composable<HOMESCREEN> {
-           LandingScreen( navController = navController)
+          // LandingScreen( navController = navController)
+            landingScreen(navController = navController)
         }
         composable<SIGNUPCREEN> {
           SingUpScreen(navController=navController)
@@ -135,53 +139,169 @@ LaunchedEffect(auth) {
 
 
 }
+//@Composable
+//fun LandingScreen(navController: NavController,viewModel: MyViewModel= hiltViewModel()) {
+//    val couroutineScope= rememberCoroutineScope()
+//
+//    Column(modifier = Modifier.fillMaxSize()) {
+//        val listOfTabs={
+//            listOf<TabItems>(
+//                TabItems(title = "Home", Icon =Icons.Default.Home ),
+//                TabItems(title = "Orders", Icon = Icons.Default.ShoppingCart),
+//                TabItems(title = "Products", Icon =Icons.Default.Person ),
+//                TabItems(title = "Liked", Icon =Icons.Default.Star )
+//            )
+//        }
+//        val pagerState= rememberPagerState(pageCount ={listOfTabs().size})
+//        TabRow(selectedTabIndex =pagerState.currentPage  ) {
+//            listOfTabs().forEachIndexed { index, tabItems ->
+//                Tab(selected = pagerState.currentPage==index, onClick = {
+//                    couroutineScope.launch {
+//                        pagerState.scrollToPage(index)
+//                    }
+//                }) {
+//                    Text("${tabItems.title}")
+//                    Icon(imageVector = tabItems.Icon, contentDescription = null)
+//                }
+//
+//            }
+//        }
+//        HorizontalPager(pagerState) {
+//            when(pagerState.currentPage){
+//                0->{
+//                   GetcategoryScreen(navController=navController)
+//                }
+//                1->{
+//                    MyOrderScreen(navController = navController)
+//                }
+//                2->{
+//                   // MyOrderScreen()
+//                   AllProductScreen(navController = navController)
+//                }
+//                3->{
+//                    CartScreen(navController = navController)
+//                }
+//
+//
+//            }
+//        }
+//
+//    }
+//}
+//data class TabItems(val title:String,val Icon:ImageVector)
+//@Composable
+//fun landindScreen(navController: NavController) {
+//    var selectedindex by remember { mutableStateOf(0) }
+//    val listOfTabs=
+//        listOf<TabItems>(
+//            TabItems(title = "Home", Icon =Icons.Default.Home ),
+//            TabItems(title = "Orders", Icon = Icons.Default.ShoppingCart),
+//            TabItems(title = "Products", Icon =Icons.Default.Person ),
+//            TabItems(title = "Liked", Icon =Icons.Default.Star )
+//        )
+//
+//    Scaffold(
+//        modifier = Modifier.fillMaxSize(),
+//        bottomBar = {
+//            listOfTabs.forEachIndexed { index, tabItems ->
+//                NavigationBar {
+//                    NavigationBarItem(selected = selectedindex==index, onClick = {
+//                        selectedindex = index
+//                    },
+//                        icon = {
+//                            Icon(imageVector = tabItems.Icon, contentDescription = null)
+//                        },
+//                        label = {
+//                            Text("${tabItems.title}")
+//                        }
+//                    )
+//                }
+//
+//            }
+//
+//        }
+//    ) { it
+//
+//        ContentScreen(selectedIndex = selectedindex,navController = navController)
+//
+//    }
+//
+//}
+//
+//@Composable
+//fun ContentScreen(selectedIndex:Int,navController: NavController) {
+//    when(selectedIndex){
+//        0->{
+//            GetcategoryScreen(navController=navController)
+//        }
+//        1->{
+//            MyOrderScreen(navController = navController)
+//        }
+//        2->{
+//            // MyOrderScreen()
+//            AllProductScreen(navController = navController)
+//        }
+//        3->{
+//            CartScreen(navController = navController)
+//        }
+//    }
+//
+//
+//}
+data class TabItems(val title: String, val Icon: ImageVector)
+
 @Composable
-fun LandingScreen(navController: NavController,viewModel: MyViewModel= hiltViewModel()) {
-    val couroutineScope= rememberCoroutineScope()
+fun landingScreen(navController: NavController) {
+    var selectedindex by remember { mutableStateOf(0) }
+    val listOfTabs = listOf(
+        TabItems(title = "Home", Icon = Icons.Default.Home),
+        TabItems(title = "Orders", Icon = Icons.Default.ShoppingCart),
+        TabItems(title = "Products", Icon = Icons.Default.Person),
+        TabItems(title = "Liked", Icon = Icons.Default.Star)
+    )
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        val listOfTabs={
-            listOf<TabItems>(
-                TabItems(title = "Home", Icon =Icons.Default.Home ),
-                TabItems(title = "Orders", Icon = Icons.Default.ShoppingCart),
-                TabItems(title = "Products", Icon =Icons.Default.Person ),
-                TabItems(title = "Liked", Icon =Icons.Default.Star )
-            )
-        }
-        val pagerState= rememberPagerState(pageCount ={listOfTabs().size})
-        TabRow(selectedTabIndex =pagerState.currentPage  ) {
-            listOfTabs().forEachIndexed { index, tabItems ->
-                Tab(selected = pagerState.currentPage==index, onClick = {
-                    couroutineScope.launch {
-                        pagerState.scrollToPage(index)
-                    }
-                }) {
-                    Text("${tabItems.title}")
-                    Icon(imageVector = tabItems.Icon, contentDescription = null)
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = {
+            NavigationBar {
+                listOfTabs.forEachIndexed { index, tabItems ->
+                    NavigationBarItem(
+                        selected = selectedindex == index,
+                        onClick = {
+                            selectedindex = index
+                        },
+                        icon = {
+                            Icon(imageVector = tabItems.Icon, contentDescription = null)
+                        },
+                        label = {
+                            Text("${tabItems.title}")
+                        }
+                    )
                 }
-
             }
         }
-        HorizontalPager(pagerState) {
-            when(pagerState.currentPage){
-                0->{
-                   GetcategoryScreen(navController=navController)
-                }
-                1->{
-                    MyOrderScreen(navController = navController)
-                }
-                2->{
-                   // MyOrderScreen()
-                   AllProductScreen(navController = navController)
-                }
-                3->{
-                    CartScreen(navController = navController)
-                }
-
-
-            }
-        }
-
+    ) { innerPadding ->
+        ContentScreen(selectedIndex = selectedindex, navController = navController, paddingValues = innerPadding)
     }
 }
-data class TabItems(val title:String,val Icon:ImageVector)
+
+@Composable
+fun ContentScreen(selectedIndex: Int, navController: NavController, paddingValues: PaddingValues) {
+
+        when(selectedIndex){
+        0->{
+            GetcategoryScreen(navController=navController)
+        }
+        1->{
+            MyOrderScreen(navController = navController)
+        }
+        2->{
+            // MyOrderScreen()
+            AllProductScreen(navController = navController)
+        }
+        3->{
+            CartScreen(navController = navController)
+        }
+    }
+    }
+

@@ -29,10 +29,14 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 
 
 import androidx.compose.ui.Modifier
@@ -65,12 +69,17 @@ fun GetcategoryScreen(viewModel: MyViewModel = hiltViewModel(), navController: N
     val categoryState = viewModel.getAllCategoryState.collectAsState()
     val productState = viewModel.getproducts.collectAsState()
     val getallproductstate = viewModel.getAllProductsWithoutLimitState.collectAsState()
+    val search= remember { mutableStateOf("") }
     if (categoryState.value.isloading || productState.value.isloading || getallproductstate.value.isloading) {
         // Show loading indicator
        LoadingBar()
-    } else {
+    }
+    else if (categoryState.value.error.isNotEmpty() || productState.value.error.isNotEmpty() || getallproductstate.value.error.isNotEmpty()) {
+        Text("ERROR IN SERVER")
+    }
+    else {
 
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 
 
             // Categories LazyRow
@@ -121,11 +130,7 @@ fun GetcategoryScreen(viewModel: MyViewModel = hiltViewModel(), navController: N
             Spacer(modifier = Modifier.height(16.dp))
 
             // All Products Section
-            Text(
-                text = "All Products",
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(16.dp)
-            )
+
 
         }
     }

@@ -16,14 +16,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells.Fixed
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults.cardElevation
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,45 +45,84 @@ import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.femalepoint.navigation.ORDERSCREEN
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
+import com.shashank.sony.fancytoastlib.FancyToast
 
 @Composable
 fun AllProductScreen(viewModel: MyViewModel = hiltViewModel(), navController: NavController) {
     LaunchedEffect(Unit) {
         viewModel.getAllProductWithoutLimit()
     }
+    val searchState=viewModel.searchProductState.collectAsState()
     val state = viewModel.getAllProductsWithoutLimitState.collectAsState()
     val context = LocalContext.current
-
+    val search = remember { mutableStateOf("") }
     when {
-        state.value.isloading -> {
+        state.value.isloading && searchState.value.isloading-> {
             // Show loading indicator
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
         }
-        state.value.error.isNotEmpty() -> {
+
+        state.value.error.isNotEmpty() && searchState.value.error.isNotEmpty()-> {
             // Show error message
-            Toast.makeText(context, "Error loading products: ${state.value.error}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                "Error loading products: ${state.value.error}",
+                Toast.LENGTH_SHORT
+            ).show()
         }
+
         state.value.data != null -> {
             // Display products in a grid
-            LazyVerticalGrid(
-                columns = Fixed(2),
+            Column(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(8.dp)
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                items(state.value.data){ product ->
-                    EachAllProductLook(
-                        name = product.name,
-                        price = product.price,
-                        finalPrice = product.finalprice,
-                        imageUri = product.imageUri,
-                        category = product.category,
-                        description = product.description,
-                        noOfUnits = product.noOfUnits,
-                        productId = product.productid,
-                        navController = navController
-                    )
+                Row {
+                OutlinedTextField(value = search.value, onValueChange = {
+                    search.value=it
+                }, placeholder = {
+                    Text("SEARCH")
+                }, modifier = Modifier.fillMaxWidth(0.75f), singleLine = true)
+                    IconButton(
+                        onClick = {
+                            if (search.value.isNotEmpty()){
+                                //Todo
+
+
+                            }else{
+                                FancyToast.makeText(context,"Enter something!!",FancyToast.LENGTH_LONG,FancyToast.WARNING,false).show()
+                            }
+
+                        }, // Action to perform when button is clicked
+                        modifier =Modifier.fillMaxWidth(0.25f) // Size of the button
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Search, // Use the search icon from Material Icons
+                            contentDescription = "Search Icon", // Accessibility description
+                        )
+                    }
+                }
+                LazyVerticalGrid(
+                    columns = Fixed(2),
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(8.dp)
+                ) {
+
+                    items(state.value.data) { product ->
+                        EachAllProductLook(
+                            name = product.name,
+                            price = product.price,
+                            finalPrice = product.finalprice,
+                            imageUri = product.imageUri,
+                            category = product.category,
+                            description = product.description,
+                            noOfUnits = product.noOfUnits,
+                            productId = product.productid,
+                            navController = navController
+                        )
+                    }
                 }
             }
         }

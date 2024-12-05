@@ -16,6 +16,7 @@ import com.example.femalepoint.data.OrderState
 import com.example.femalepoint.data.Product
 import com.example.femalepoint.data.ReviewDeatailsUploadState
 import com.example.femalepoint.data.ReviewDetails
+import com.example.femalepoint.data.SearchProductState
 import com.example.femalepoint.data.UpdateStockState
 import com.example.femalepoint.data.UsersDetails
 import com.example.femalepoint.data.getCategorgy
@@ -65,6 +66,8 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
     val reviewDetailsUpload=_reviewDetailsUpload.asStateFlow()
     private val _allRevivewDeils=MutableStateFlow(AllReviewDetailsState())
     val allReviewDetails=_allRevivewDeils.asStateFlow()
+    val _searchProductState=MutableStateFlow(SearchProductState())
+    val searchProductState=_searchProductState.asStateFlow()
     fun getAllCategories() {
         viewModelScope.launch {
             repository.getcategory().collectLatest { it ->
@@ -390,6 +393,23 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                     }
                     is ResultState.Error->{
                         _allRevivewDeils.value= AllReviewDetailsState(error = it.message.toString(),isloading = false)
+                    }
+                }
+            }
+        }
+    }
+    fun searchProduct(search:String){
+        viewModelScope.launch {
+            repository.searchProduct(search = search).collectLatest {
+                when(it){
+                    is ResultState.Loading->{
+                   _searchProductState.value= SearchProductState(isloading = true)
+                    }
+                    is ResultState.Sucess->{
+                        _searchProductState.value= SearchProductState(data = it.data,isloading = false)
+                    }
+                    is ResultState.Error->{
+                        _searchProductState.value= SearchProductState(error = it.message.toString(),isloading = false)
                     }
                 }
             }

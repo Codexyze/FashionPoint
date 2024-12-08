@@ -1,5 +1,6 @@
 package com.example.femalepoint.navigation
 
+import com.example.femalepoint.data.Product
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -45,3 +46,4 @@ data class ReviewWritingScreen(val productID: String,val imageUrl: String,val ca
 
 @Serializable
 data class ALLREVIVEWSCREEN(val productId: String)
+

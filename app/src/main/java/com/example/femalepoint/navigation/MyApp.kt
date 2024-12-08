@@ -40,6 +40,7 @@ import com.example.femalepoint.presenation.screens.OrderHistoryScreen
 import com.example.femalepoint.presenation.screens.OrderProductScreen
 import com.example.femalepoint.presenation.screens.PayMentScreen
 import com.example.femalepoint.presenation.screens.ReviewWritingAndUploadingScreen
+import com.example.femalepoint.presenation.screens.SearchScreen
 import com.example.femalepoint.presenation.screens.SingUpScreen
 
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
@@ -135,119 +136,12 @@ LaunchedEffect(auth) {
             AllReviewScreen(productID = data.productId)
         }
 
+
     }
 
 
 }
-//@Composable
-//fun LandingScreen(navController: NavController,viewModel: MyViewModel= hiltViewModel()) {
-//    val couroutineScope= rememberCoroutineScope()
-//
-//    Column(modifier = Modifier.fillMaxSize()) {
-//        val listOfTabs={
-//            listOf<TabItems>(
-//                TabItems(title = "Home", Icon =Icons.Default.Home ),
-//                TabItems(title = "Orders", Icon = Icons.Default.ShoppingCart),
-//                TabItems(title = "Products", Icon =Icons.Default.Person ),
-//                TabItems(title = "Liked", Icon =Icons.Default.Star )
-//            )
-//        }
-//        val pagerState= rememberPagerState(pageCount ={listOfTabs().size})
-//        TabRow(selectedTabIndex =pagerState.currentPage  ) {
-//            listOfTabs().forEachIndexed { index, tabItems ->
-//                Tab(selected = pagerState.currentPage==index, onClick = {
-//                    couroutineScope.launch {
-//                        pagerState.scrollToPage(index)
-//                    }
-//                }) {
-//                    Text("${tabItems.title}")
-//                    Icon(imageVector = tabItems.Icon, contentDescription = null)
-//                }
-//
-//            }
-//        }
-//        HorizontalPager(pagerState) {
-//            when(pagerState.currentPage){
-//                0->{
-//                   GetcategoryScreen(navController=navController)
-//                }
-//                1->{
-//                    MyOrderScreen(navController = navController)
-//                }
-//                2->{
-//                   // MyOrderScreen()
-//                   AllProductScreen(navController = navController)
-//                }
-//                3->{
-//                    CartScreen(navController = navController)
-//                }
-//
-//
-//            }
-//        }
-//
-//    }
-//}
-//data class TabItems(val title:String,val Icon:ImageVector)
-//@Composable
-//fun landindScreen(navController: NavController) {
-//    var selectedindex by remember { mutableStateOf(0) }
-//    val listOfTabs=
-//        listOf<TabItems>(
-//            TabItems(title = "Home", Icon =Icons.Default.Home ),
-//            TabItems(title = "Orders", Icon = Icons.Default.ShoppingCart),
-//            TabItems(title = "Products", Icon =Icons.Default.Person ),
-//            TabItems(title = "Liked", Icon =Icons.Default.Star )
-//        )
-//
-//    Scaffold(
-//        modifier = Modifier.fillMaxSize(),
-//        bottomBar = {
-//            listOfTabs.forEachIndexed { index, tabItems ->
-//                NavigationBar {
-//                    NavigationBarItem(selected = selectedindex==index, onClick = {
-//                        selectedindex = index
-//                    },
-//                        icon = {
-//                            Icon(imageVector = tabItems.Icon, contentDescription = null)
-//                        },
-//                        label = {
-//                            Text("${tabItems.title}")
-//                        }
-//                    )
-//                }
-//
-//            }
-//
-//        }
-//    ) { it
-//
-//        ContentScreen(selectedIndex = selectedindex,navController = navController)
-//
-//    }
-//
-//}
-//
-//@Composable
-//fun ContentScreen(selectedIndex:Int,navController: NavController) {
-//    when(selectedIndex){
-//        0->{
-//            GetcategoryScreen(navController=navController)
-//        }
-//        1->{
-//            MyOrderScreen(navController = navController)
-//        }
-//        2->{
-//            // MyOrderScreen()
-//            AllProductScreen(navController = navController)
-//        }
-//        3->{
-//            CartScreen(navController = navController)
-//        }
-//    }
-//
-//
-//}
+
 data class TabItems(val title: String, val Icon: ImageVector)
 
 @Composable

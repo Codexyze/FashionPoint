@@ -31,14 +31,17 @@ fun SearchScreen(listOfProduct: List<Product>) {
             .padding(8.dp)
     ) {
         items(listOfProduct) { product ->
-            ProductItem(product = product)
+            ProductItem(price = product.price.toString(),name = product.name,finalPrice = product.finalprice.toString(),
+                imageUri = product.imageUri,category = product.category,date = product.date.toString(),description = product.description,productID = product.productid)
             Spacer(modifier = Modifier.height(16.dp)) // Add spacing between items
+
         }
     }
 }
 
 @Composable
-fun ProductItem(product: Product) {
+fun ProductItem(price:String="",name:String="",finalPrice:String="",
+                imageUri:String="",category:String="",date:String="",description:String="",productID:String="") {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,7 +50,7 @@ fun ProductItem(product: Product) {
     ) {
         // Product Image
         AsyncImage(
-            model = product.imageUri,
+            model = imageUri,
             contentDescription = "Product Image",
             modifier = Modifier
                 .size(200.dp),
@@ -62,7 +65,7 @@ fun ProductItem(product: Product) {
 
             // Product Name
             Text(
-                text = product.name,
+                text = name,
 
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis // Add "..." if text overflows
@@ -70,7 +73,7 @@ fun ProductItem(product: Product) {
 
             // Product Category
             Text(
-                text = product.category,
+                text =category,
 
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis

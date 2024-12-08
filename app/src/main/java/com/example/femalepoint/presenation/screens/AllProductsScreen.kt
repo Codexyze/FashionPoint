@@ -1,5 +1,6 @@
 package com.example.femalepoint.presenation.screens
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -73,6 +74,8 @@ fun AllProductScreen(viewModel: MyViewModel = hiltViewModel(), navController: Na
             ).show()
         }
 
+
+
         state.value.data != null -> {
             // Display products in a grid
             Column(
@@ -89,6 +92,17 @@ fun AllProductScreen(viewModel: MyViewModel = hiltViewModel(), navController: Na
                         onClick = {
                             if (search.value.isNotEmpty()){
                                 //Todo
+
+                               viewModel.searchProduct(search.value)
+                                if (searchState.value.data!=null){
+                                    Log.d("Search",searchState.value.data.toString())
+                                    //getting data here
+                                }else{
+                                    Log.d("Search",searchState.value.error.toString())
+
+                                }
+
+
 
 
                             }else{
@@ -128,6 +142,7 @@ fun AllProductScreen(viewModel: MyViewModel = hiltViewModel(), navController: Na
         }
     }
 }
+
 @Composable
 fun EachAllProductLook(
     name: String,

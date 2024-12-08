@@ -310,9 +310,12 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
         trySend(ResultState.Loading)
         firebaseinstance.collection(Constants.PRODUCT).whereEqualTo("name",search).get().addOnSuccessListener {
             val data = it.documents.mapNotNull {
+
                 it.toObject(Product::class.java)
+
             }
             trySend(ResultState.Sucess(data))
+            Log.d("FireBaseData", data.toString())
         }.addOnFailureListener {
             trySend(ResultState.Error(it.message.toString()))
         }

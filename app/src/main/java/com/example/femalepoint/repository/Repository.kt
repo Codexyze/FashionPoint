@@ -93,7 +93,6 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
                 }
             }
         return loginstate
-
     }
 
     suspend fun getAllProduct(): Flow<ResultState<List<Product>>> = callbackFlow {

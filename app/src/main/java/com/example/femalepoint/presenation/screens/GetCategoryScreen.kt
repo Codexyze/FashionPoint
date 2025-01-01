@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,11 +23,13 @@ import androidx.compose.foundation.lazy.items
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -51,10 +54,12 @@ import com.example.femalepoint.R
 import com.example.femalepoint.navigation.ALLPRODUCTSCREEN
 import com.example.femalepoint.navigation.MATCHEDSCREEN
 import com.example.femalepoint.navigation.ORDERSCREEN
+import com.example.femalepoint.navigation.SEARCHSCREEN
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 
 
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
+import com.shashank.sony.fancytoastlib.FancyToast
 
 @Composable
 fun GetcategoryScreen(viewModel: MyViewModel = hiltViewModel(), navController: NavController) {
@@ -67,19 +72,51 @@ fun GetcategoryScreen(viewModel: MyViewModel = hiltViewModel(), navController: N
 
     // Collecting states
     val categoryState = viewModel.getAllCategoryState.collectAsState()
+    val searchstate=viewModel.searchProductState.collectAsState()
     val productState = viewModel.getproducts.collectAsState()
     val getallproductstate = viewModel.getAllProductsWithoutLimitState.collectAsState()
     val search= remember { mutableStateOf("") }
-    if (categoryState.value.isloading || productState.value.isloading || getallproductstate.value.isloading) {
+    if (categoryState.value.isloading || productState.value.isloading || getallproductstate.value.isloading||searchstate.value.isloading) {
         // Show loading indicator
        LoadingBar()
     }
-    else if (categoryState.value.error.isNotEmpty() || productState.value.error.isNotEmpty() || getallproductstate.value.error.isNotEmpty()) {
+    else if (categoryState.value.error.isNotEmpty() || productState.value.error.isNotEmpty() || getallproductstate.value.error.isNotEmpty()||searchstate.value.error.isNotEmpty()) {
         Text("ERROR IN SERVER")
     }
     else {
 
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+          Row(modifier = Modifier.fillMaxWidth()) {
+              OutlinedTextField(
+                  value = search.value,
+                  onValueChange = { search.value = it },
+                  label = { Text("Search") },
+                  modifier = Modifier.fillMaxWidth(0.85f)
+                      .padding(4.dp)
+              )
+              IconButton(onClick = {
+                  //todo
+                  viewModel.searchProduct(search.value)
+                  if(searchstate.value.data!=null) {
+                      navController.navigate(SEARCHSCREEN)
+                  }else if(searchstate.value.isloading) {
+                      FancyToast.makeText(
+                          navController.context,
+                          "Loading",
+                          FancyToast.LENGTH_LONG,
+                          FancyToast.INFO,
+                          true
+                      ).show()
+                  }
+
+
+              }) {
+                  Icon(
+                      imageVector = Icons.Default.Search,
+                      contentDescription = "Search",
+                  )
+              }
+          }
 
 
             // Categories LazyRow

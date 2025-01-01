@@ -135,6 +135,10 @@ LaunchedEffect(auth) {
             val data:ALLREVIVEWSCREEN=bacstackentry.toRoute()
             AllReviewScreen(productID = data.productId)
         }
+        composable<SEARCHSCREEN> {
+            SearchScreen()
+        }
+
 
 
     }

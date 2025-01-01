@@ -39,11 +39,15 @@ object  ALLPRODUCTSCREEN
 @Serializable
 data class ORDERHISTORYDETAILS(val productCategory: String,val productName: String,
     val price: Int,val finalprice: Int,val description: String,val noOfUnits: Int,
-                               val productId: String,val imageUri:String)
+                               val productId: String,val imageUri:String
+    )
 
 @Serializable
 data class ReviewWritingScreen(val productID: String,val imageUrl: String,val category: String,val productname: String)
 
 @Serializable
 data class ALLREVIVEWSCREEN(val productId: String)
+
+@Serializable
+object SEARCHSCREEN
 

@@ -28,6 +28,7 @@ import androidx.navigation.NavController
 import com.example.femalepoint.navigation.HOMESCREEN
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.shashank.sony.fancytoastlib.FancyToast
 
 @Composable
@@ -48,7 +49,18 @@ fun LoginScreen(
     // Display a loading indicator if login is in progress
     if (loginState.value.isloading) {
         LoadingBar()
-    } else {
+    }else  if (loginState.value.error.isNotEmpty()) {
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+           // text = "Oops! Something went wrong: ${loginState.value.error}",
+            text = "WRONG PASSWORD OR EMAIL",
+            color = MaterialTheme.colorScheme.error, // Use an error color
+            style = MaterialTheme.typography.titleLarge
+        )
+    }
+
+
+    else {
         Column(
             modifier = Modifier
                 .fillMaxHeight()
@@ -120,7 +132,22 @@ fun LoginScreen(
                                 )
                                 if (loginState.value.data != null) {
                                     // Navigate to the home screen on successful login
-                                    navController.navigate(HOMESCREEN)
+                                    if(FirebaseAuth.getInstance().currentUser!=null) {
+                                    navController.navigate(HOMESCREEN){
+                                        popUpTo(HOMESCREEN){
+                                            inclusive = true
+                                        }
+                                    }
+                                    }else {
+                                        FancyToast.makeText(
+                                            context,
+                                            "Try Reclicking",
+                                            FancyToast.LENGTH_LONG,
+                                            FancyToast.WARNING,
+                                            false
+                                        ).show()
+
+                                    }
                                 }
                             } catch (e: Exception) {
                                 // Show an error Toast on exception
@@ -135,14 +162,7 @@ fun LoginScreen(
             }
 
             // Show an error message if any error occurs
-            if (loginState.value.error.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Oops! Something went wrong: ${loginState.value.error}",
-                    color = MaterialTheme.colorScheme.error, // Use an error color
-                    style = MaterialTheme.typography.titleLarge
-                )
-            }
+
         }
     }
 }

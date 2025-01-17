@@ -189,6 +189,7 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
                       ) {
                           Text(text = "ADD USER DETAILS")
                       }
+                      Spacer(modifier = Modifier.height(200.dp))
 
 
                   }

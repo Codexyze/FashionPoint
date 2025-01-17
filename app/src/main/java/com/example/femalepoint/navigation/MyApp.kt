@@ -136,7 +136,7 @@ LaunchedEffect(auth) {
             AllReviewScreen(productID = data.productId)
         }
         composable<SEARCHSCREEN> {
-            SearchScreen()
+            SearchScreen(navController = navController)
         }
 
 

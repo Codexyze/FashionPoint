@@ -83,41 +83,9 @@ fun AllProductScreen(viewModel: MyViewModel = hiltViewModel(), navController: Na
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row {
-                OutlinedTextField(value = search.value, onValueChange = {
-                    search.value=it
-                }, placeholder = {
-                    Text("SEARCH")
-                }, modifier = Modifier.fillMaxWidth(0.75f), singleLine = true)
-                    IconButton(
-                        onClick = {
-                            if (search.value.isNotEmpty()){
-                                //Todo
-
-                               viewModel.searchProduct(search.value)
-                                if (searchState.value.data!=null){
-                                    Log.d("Search",searchState.value.data.toString())
-                                    //getting data here
-                                }else{
-                                    Log.d("Search",searchState.value.error.toString())
-
-                                }
-
-
-
-
-                            }else{
-                                FancyToast.makeText(context,"Enter something!!",FancyToast.LENGTH_LONG,FancyToast.WARNING,false).show()
-                            }
-
-                        }, // Action to perform when button is clicked
-                        modifier =Modifier.fillMaxWidth(0.25f) // Size of the button
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Search, // Use the search icon from Material Icons
-                            contentDescription = "Search Icon", // Accessibility description
-                        )
-                    }
+                    Text("Why not search products??")
                 }
+
                 LazyVerticalGrid(
                     columns = Fixed(2),
                     modifier = Modifier.fillMaxSize(),

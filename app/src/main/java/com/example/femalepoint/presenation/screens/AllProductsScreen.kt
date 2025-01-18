@@ -45,6 +45,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.femalepoint.navigation.ORDERSCREEN
+import com.example.femalepoint.navigation.SEARCHSCREEN
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 import com.shashank.sony.fancytoastlib.FancyToast
 
@@ -83,7 +84,10 @@ fun AllProductScreen(viewModel: MyViewModel = hiltViewModel(), navController: Na
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row {
-                    Text("Why not search products??")
+                    Text("Why not search products??" , modifier = Modifier.clickable {
+                        navController.navigate(SEARCHSCREEN)
+
+                    })
                 }
 
                 LazyVerticalGrid(

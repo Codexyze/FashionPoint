@@ -42,7 +42,6 @@ import com.example.femalepoint.R
 import com.example.femalepoint.navigation.ALLPRODUCTSCREEN
 import com.example.femalepoint.navigation.MATCHEDSCREEN
 import com.example.femalepoint.navigation.ORDERSCREEN
-import com.example.femalepoint.navigation.SEARCHSCREEN
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 
 
@@ -75,35 +74,7 @@ fun GetcategoryScreen(viewModel: MyViewModel = hiltViewModel(), navController: N
 
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
           Row(modifier = Modifier.fillMaxWidth()) {
-//              OutlinedTextField(
-//                  value = search.value,
-//                  onValueChange = { search.value = it },
-//                  label = { Text("Search") },
-//                  modifier = Modifier.fillMaxWidth(0.85f)
-//                      .padding(4.dp)
-//              )
-//              IconButton(onClick = {
-//                  //todo
-//                  viewModel.searchProduct(search.value)
-//                  if(searchstate.value.data!=null) {
-//                      navController.navigate(SEARCHSCREEN)
-//                  }else if(searchstate.value.isloading) {
-//                      FancyToast.makeText(
-//                          navController.context,
-//                          "Loading",
-//                          FancyToast.LENGTH_LONG,
-//                          FancyToast.INFO,
-//                          true
-//                      ).show()
-//                  }
-//
-//
-//              }) {
-//                  Icon(
-//                      imageVector = Icons.Default.Search,
-//                      contentDescription = "Search",
-//                  )
-//              }
+
           }
 
 

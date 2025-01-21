@@ -1,6 +1,5 @@
 package com.example.femalepoint.presenation.screens
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,15 +16,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells.Fixed
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults.cardElevation
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
+
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -47,7 +44,7 @@ import coil3.compose.AsyncImage
 import com.example.femalepoint.navigation.ORDERSCREEN
 import com.example.femalepoint.navigation.SEARCHSCREEN
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
-import com.shashank.sony.fancytoastlib.FancyToast
+
 
 @Composable
 fun AllProductScreen(viewModel: MyViewModel = hiltViewModel(), navController: NavController) {

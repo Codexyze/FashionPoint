@@ -12,10 +12,6 @@ import com.example.femalepoint.data.Userdata
 import com.example.femalepoint.data.UsersDetails
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.auth.User
-import com.google.firebase.firestore.toObject
-import com.google.firebase.firestore.toObjects
-
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

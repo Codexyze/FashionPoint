@@ -24,7 +24,7 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
     private val _loginstate = MutableStateFlow<ResultState<String>>(ResultState.Loading)
     val loginstate = _loginstate
     private val auth = FirebaseAuth.getInstance()
-    private val currentuser = auth.currentUser?.uid ?: ""
+    private val currentuser = auth.currentUser?.uid ?: "" //uuid from firebase
     private val time = System.currentTimeMillis()
 
     suspend fun getcategory(): Flow<ResultState<List<Category>>> = callbackFlow {

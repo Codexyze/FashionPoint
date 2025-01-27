@@ -12,6 +12,7 @@ import com.example.femalepoint.data.Userdata
 import com.example.femalepoint.data.UsersDetails
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,6 +27,8 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
     private val auth = FirebaseAuth.getInstance()
     private val currentuser = auth.currentUser?.uid ?: "" //uuid from firebase
     private val time = System.currentTimeMillis()
+    private val storage=FirebaseStorage.getInstance()
+    private val storageRefrence=storage.reference
 
     suspend fun getcategory(): Flow<ResultState<List<Category>>> = callbackFlow {
         trySend(ResultState.Loading)

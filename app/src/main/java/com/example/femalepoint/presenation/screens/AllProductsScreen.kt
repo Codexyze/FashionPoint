@@ -13,13 +13,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells.Fixed
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults.cardElevation
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 
 import androidx.compose.material3.MaterialTheme
 
@@ -31,6 +38,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -45,25 +53,174 @@ import com.example.femalepoint.navigation.ORDERSCREEN
 import com.example.femalepoint.navigation.SEARCHSCREEN
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 
-
+//
+//@Composable
+//fun AllProductScreen(viewModel: MyViewModel = hiltViewModel(), navController: NavController) {
+//    LaunchedEffect(Unit) {
+//        viewModel.getAllProductWithoutLimit()
+//    }
+//    val searchState=viewModel.searchProductState.collectAsState()
+//    val state = viewModel.getAllProductsWithoutLimitState.collectAsState()
+//    val context = LocalContext.current
+//    val search = remember { mutableStateOf("") }
+//    when {
+//        state.value.isloading && searchState.value.isloading-> {
+//            // Show loading indicator
+//            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//                CircularProgressIndicator()
+//            }
+//        }
+//
+//        state.value.error.isNotEmpty() && searchState.value.error.isNotEmpty()-> {
+//            // Show error message
+//            Toast.makeText(
+//                context,
+//                "Error loading products: ${state.value.error}",
+//                Toast.LENGTH_SHORT
+//            ).show()
+//        }
+//
+//
+//
+//        state.value.data != null -> {
+//            // Display products in a grid
+//            Column(
+//                modifier = Modifier.fillMaxSize(),
+//                horizontalAlignment = Alignment.Start
+//            ) {
+//                Row {
+//                    IconButton(onClick = {}) {
+//                        Icon(imageVector = Icons.Default.Person, contentDescription = "Search")
+//                    }
+//                    Spacer(modifier = Modifier.width(16.dp))
+//                    Text("Why not search products??" , modifier = Modifier.clickable {
+//                        navController.navigate(SEARCHSCREEN)
+//
+//                    })
+//                }
+//
+//                LazyVerticalGrid(
+//                    columns = Fixed(2),
+//                    modifier = Modifier.fillMaxSize(),
+//                    contentPadding = PaddingValues(8.dp)
+//                ) {
+//
+//                    items(state.value.data) { product ->
+//                        EachAllProductLook(
+//                            name = product.name,
+//                            price = product.price,
+//                            finalPrice = product.finalprice,
+//                            imageUri = product.imageUri,
+//                            category = product.category,
+//                            description = product.description,
+//                            noOfUnits = product.noOfUnits,
+//                            productId = product.productid,
+//                            navController = navController
+//                        )
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+//
+//@Composable
+//fun EachAllProductLook(
+//    name: String,
+//    price: Int,
+//    finalPrice: Int,
+//    imageUri: String,
+//    category: String,
+//    description: String,
+//    noOfUnits: Int,
+//    productId: String,
+//    navController: NavController
+//) {
+//    Card(
+//        modifier = Modifier
+//            .padding(8.dp)
+//            .fillMaxWidth()
+//        ,
+//        elevation = cardElevation(8.dp)
+//    ) {
+//        Column(
+//            modifier = Modifier
+//                .padding(8.dp)
+//                .fillMaxSize().clickable {
+//
+//                    navController.navigate(ORDERSCREEN(
+//                        produt_id = productId,
+//                        imageUri = imageUri,
+//                        price = price,
+//                        finalprice = finalPrice,
+//                        name = name,
+//                        discription = description,
+//                        category = category,
+//                        noOfUnits = noOfUnits
+//                    ))
+//                },
+//            horizontalAlignment = Alignment.CenterHorizontally
+//        ) {
+//            // Product Image
+//            AsyncImage(
+//                model = imageUri,
+//                contentDescription = "Product Image",
+//                modifier = Modifier
+//                    .size(200.dp),
+//                contentScale = ContentScale.Fit
+//            )
+//
+//            Spacer(modifier = Modifier.height(8.dp))
+//
+//            // Product Name
+//            Text(
+//                text = name,
+//                style = MaterialTheme.typography.bodyLarge,
+//                maxLines = 1,
+//                overflow = TextOverflow.Ellipsis,
+//                modifier = Modifier.align(Alignment.CenterHorizontally)
+//            )
+//
+//            Spacer(modifier = Modifier.height(4.dp))
+//
+//            // Product Prices
+//            Row(
+//                modifier = Modifier.fillMaxWidth(),
+//                horizontalArrangement = Arrangement.SpaceBetween
+//            ) {
+//                Text(
+//                    text = "₹$price",
+//                    color = Color.Gray,
+//                    textDecoration = TextDecoration.LineThrough
+//                )
+//                Text(
+//                    text = "₹$finalPrice",
+//                    style = MaterialTheme.typography.bodyMedium,
+//                    color = Color.Green,
+//                    fontWeight = FontWeight.Bold
+//                )
+//            }
+//        }
+//    }
+//}
 @Composable
 fun AllProductScreen(viewModel: MyViewModel = hiltViewModel(), navController: NavController) {
     LaunchedEffect(Unit) {
         viewModel.getAllProductWithoutLimit()
     }
-    val searchState=viewModel.searchProductState.collectAsState()
+    val searchState = viewModel.searchProductState.collectAsState()
     val state = viewModel.getAllProductsWithoutLimitState.collectAsState()
     val context = LocalContext.current
-    val search = remember { mutableStateOf("") }
+
     when {
-        state.value.isloading && searchState.value.isloading-> {
+        state.value.isloading && searchState.value.isloading -> {
             // Show loading indicator
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
             }
         }
 
-        state.value.error.isNotEmpty() && searchState.value.error.isNotEmpty()-> {
+        state.value.error.isNotEmpty() && searchState.value.error.isNotEmpty() -> {
             // Show error message
             Toast.makeText(
                 context,
@@ -72,27 +229,56 @@ fun AllProductScreen(viewModel: MyViewModel = hiltViewModel(), navController: Na
             ).show()
         }
 
-
-
         state.value.data != null -> {
             // Display products in a grid
             Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.Start
             ) {
-                Row {
-                    Text("Why not search products??" , modifier = Modifier.clickable {
-                        navController.navigate(SEARCHSCREEN)
-
-                    })
+                // Header Section
+                Card(
+      modifier = Modifier
+          .padding(8.dp)
+           .fillMaxWidth()
+       ,
+        elevation = cardElevation(8.dp)
+   ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Why not search products?",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .weight(1f)
+                                .clickable { navController.navigate(SEARCHSCREEN) }
+                        )
+                        IconButton(onClick = { navController.navigate(SEARCHSCREEN) }) {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = "Search Products",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
                 }
 
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Product Grid
                 LazyVerticalGrid(
                     columns = Fixed(2),
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(8.dp)
                 ) {
-
                     items(state.value.data) { product ->
                         EachAllProductLook(
                             name = product.name,
@@ -125,27 +311,29 @@ fun EachAllProductLook(
     navController: NavController
 ) {
     Card(
-        modifier = Modifier
+       modifier = Modifier
             .padding(8.dp)
             .fillMaxWidth()
-        ,
+       ,
         elevation = cardElevation(8.dp)
-    ) {
+    )  {
         Column(
             modifier = Modifier
                 .padding(8.dp)
-                .fillMaxSize().clickable {
-
-                    navController.navigate(ORDERSCREEN(
-                        produt_id = productId,
-                        imageUri = imageUri,
-                        price = price,
-                        finalprice = finalPrice,
-                        name = name,
-                        discription = description,
-                        category = category,
-                        noOfUnits = noOfUnits
-                    ))
+                .fillMaxSize()
+                .clickable {
+                    navController.navigate(
+                        ORDERSCREEN(
+                            produt_id = productId,
+                            imageUri = imageUri,
+                            price = price,
+                            finalprice = finalPrice,
+                            name = name,
+                            discription = description,
+                            category = category,
+                            noOfUnits = noOfUnits
+                        )
+                    )
                 },
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -154,7 +342,8 @@ fun EachAllProductLook(
                 model = imageUri,
                 contentDescription = "Product Image",
                 modifier = Modifier
-                    .size(200.dp),
+                    .size(160.dp)
+                    .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Fit
             )
 
@@ -179,12 +368,13 @@ fun EachAllProductLook(
                 Text(
                     text = "₹$price",
                     color = Color.Gray,
-                    textDecoration = TextDecoration.LineThrough
+                    textDecoration = TextDecoration.LineThrough,
+                    style = MaterialTheme.typography.bodySmall
                 )
                 Text(
                     text = "₹$finalPrice",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color.Green,
+                    color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.Bold
                 )
             }

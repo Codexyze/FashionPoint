@@ -43,6 +43,7 @@ fun SearchScreen(myViewModel: MyViewModel = hiltViewModel(), navController: NavC
     val searchState = myViewModel.searchProductState.collectAsState()
 
     Column(modifier = Modifier.fillMaxSize().padding(8.dp)) {
+        Spacer(modifier = Modifier.height(16.dp))
         // Search Input Row
         Row(modifier = Modifier.fillMaxWidth()) {
             OutlinedTextField(

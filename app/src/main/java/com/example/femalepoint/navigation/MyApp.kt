@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
@@ -159,7 +160,7 @@ fun landingScreen(navController: NavController) {
         TabItems(title = "Home", Icon = Icons.Default.Home),
         TabItems(title = "Orders", Icon = Icons.Default.ShoppingCart),
         TabItems(title = "Products", Icon = Icons.Default.Person),
-        TabItems(title = "Liked", Icon = Icons.Default.Star),
+        TabItems(title = "Search", Icon = Icons.Default.Search),
         TabItems(title = "Settings", Icon = Icons.Default.Settings)
 
     )
@@ -204,7 +205,9 @@ fun ContentScreen(selectedIndex: Int, navController: NavController, paddingValue
             AllProductScreen(navController = navController)
         }
         3->{
-            CartScreen(navController = navController)
+           // CartScreen(navController = navController)
+            SearchScreen(navController = navController)
+
         }
         4->{
             SeetingsScreen(navController = navController)

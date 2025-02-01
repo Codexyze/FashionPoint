@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
@@ -156,7 +157,9 @@ fun landingScreen(navController: NavController) {
         TabItems(title = "Home", Icon = Icons.Default.Home),
         TabItems(title = "Orders", Icon = Icons.Default.ShoppingCart),
         TabItems(title = "Products", Icon = Icons.Default.Person),
-        TabItems(title = "Liked", Icon = Icons.Default.Star)
+        TabItems(title = "Liked", Icon = Icons.Default.Star),
+        TabItems(title = "Settings", Icon = Icons.Default.Settings)
+
     )
 
     Scaffold(

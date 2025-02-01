@@ -1,5 +1,6 @@
 package com.example.femalepoint.presenation.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
@@ -30,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.femalepoint.navigation.CARTSCREEN
 
 @Composable
 fun SeetingsScreen(navController: NavController) {
@@ -45,7 +48,9 @@ fun SeetingsScreen(navController: NavController) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp), // Add padding around the card
+                        .padding(16.dp).clickable {
+                            navController.navigate(CARTSCREEN)
+                        }, // Add padding around the card
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.surfaceVariant,
                     ),
@@ -91,14 +96,14 @@ fun SeetingsScreen(navController: NavController) {
                         verticalAlignment = Alignment.CenterVertically // Align items in the center
                     ) {
                         Icon(
-                            imageVector = Icons.Default.ShoppingCart,
+                            imageVector = Icons.Default.AccountBox,
                             contentDescription = "Cart",
                             modifier = Modifier.size(40.dp), // Increased icon size
                             tint = MaterialTheme.colorScheme.primary
                         )
                         Spacer(modifier = Modifier.width(16.dp)) // Increased spacing for better layout
                         Text(
-                            text = "Cart",
+                            text = "Next Settung",
                             fontSize = 22.sp, // Slightly larger text
                             fontWeight = FontWeight.Bold
                         )

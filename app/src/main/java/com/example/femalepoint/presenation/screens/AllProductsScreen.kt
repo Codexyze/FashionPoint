@@ -95,30 +95,30 @@ fun AllProductScreen(viewModel: MyViewModel = hiltViewModel(), navController: Na
        ,
         elevation = cardElevation(8.dp)
    ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = "Why not search products?",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.primary,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .weight(1f)
-                                .clickable { navController.navigate(SEARCHSCREEN) }
-                        )
-                        IconButton(onClick = { navController.navigate(SEARCHSCREEN) }) {
-                            Icon(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = "Search Products",
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                        }
-                    }
+//                    Row(
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(16.dp),
+//                        verticalAlignment = Alignment.CenterVertically,
+//                        horizontalArrangement = Arrangement.SpaceBetween
+//                    ) {
+//                        Text(
+//                            text = "Why not search products?",
+//                            style = MaterialTheme.typography.titleMedium,
+//                            color = MaterialTheme.colorScheme.primary,
+//                            fontWeight = FontWeight.Bold,
+//                            modifier = Modifier
+//                                .weight(1f)
+//                                .clickable { navController.navigate(SEARCHSCREEN) }
+//                        )
+//                        IconButton(onClick = { navController.navigate(SEARCHSCREEN) }) {
+//                            Icon(
+//                                imageVector = Icons.Default.Search,
+//                                contentDescription = "Search Products",
+//                                tint = MaterialTheme.colorScheme.primary
+//                            )
+//                        }
+                   // }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))

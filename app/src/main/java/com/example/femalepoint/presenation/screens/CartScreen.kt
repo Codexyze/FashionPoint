@@ -37,7 +37,7 @@ fun CartScreen(viewModel: MyViewModel = hiltViewModel(), navController: NavContr
     }
 
     // Collecting state
- val listofcartsState=viewModel.addCartItemsList.collectAsState()
+   val listofcartsState=viewModel.addCartItemsList.collectAsState()
 
     if (listofcartsState.value.isloading) {
         LoadingBar()

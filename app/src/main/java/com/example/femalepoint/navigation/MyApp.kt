@@ -42,6 +42,7 @@ import com.example.femalepoint.presenation.screens.OrderProductScreen
 import com.example.femalepoint.presenation.screens.PayMentScreen
 import com.example.femalepoint.presenation.screens.ReviewWritingAndUploadingScreen
 import com.example.femalepoint.presenation.screens.SearchScreen
+import com.example.femalepoint.presenation.screens.SeetingsScreen
 import com.example.femalepoint.presenation.screens.SingUpScreen
 
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
@@ -139,8 +140,9 @@ LaunchedEffect(auth) {
         composable<SEARCHSCREEN> {
             SearchScreen(navController = navController)
         }
-
-
+        composable<CARTSCREEN> {
+            CartScreen(navController = navController)
+        }
 
 
     }
@@ -204,6 +206,11 @@ fun ContentScreen(selectedIndex: Int, navController: NavController, paddingValue
         3->{
             CartScreen(navController = navController)
         }
+        4->{
+            SeetingsScreen(navController = navController)
+        }
+
     }
-    }
+
+}
 

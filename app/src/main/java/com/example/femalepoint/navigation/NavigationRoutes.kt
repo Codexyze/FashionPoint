@@ -51,3 +51,8 @@ data class ALLREVIVEWSCREEN(val productId: String)
 @Serializable
 object SEARCHSCREEN
 
+@Serializable
+object SETTINGSSCREEN
+
+@Serializable
+object CARTSCREEN

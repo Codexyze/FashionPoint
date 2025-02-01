@@ -83,11 +83,11 @@ fun MyOrderScreen(viewModel: MyViewModel = hiltViewModel(),navController: NavCon
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp).clickable {
-                  navController.navigate(ORDERHISTORYDETAILS(
-                      productCategory = productCategory,productName=productName,
-                      price = price, finalprice = finalprice, noOfUnits = noOfUnits,
-                      description = description, productId = productId, imageUri = productImage
-                  ))
+//                  navController.navigate(ORDERHISTORYDETAILS(
+//                      productCategory = productCategory,productName=productName,
+//                      price = price, finalprice = finalprice, noOfUnits = noOfUnits,
+//                      description = description, productId = productId, imageUri = productImage
+//                  ))
 
 
                 }

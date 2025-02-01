@@ -30,6 +30,7 @@ import androidx.navigation.NavController
 import com.example.femalepoint.R
 import com.example.femalepoint.data.OrderDetails
 import com.example.femalepoint.data.UsersDetails
+import com.example.femalepoint.navigation.HOMESCREEN
 import com.example.femalepoint.navigation.ORDERSCREEN
 import com.example.femalepoint.navigation.PAYMENTSCREEN
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
@@ -168,10 +169,14 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
                                       val value=noOfUnitsQuntity-noOfUnits.value.toInt()
                                      viewModel.updateStockByIdAndStock(productID = productID,
                                          stock = value)
-                                      FancyToast.makeText(context,"SUCESSFUL",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show()
-                                      navController.navigate(PAYMENTSCREEN){
+                                      navController.navigate(HOMESCREEN){
                                           navController.popBackStack(ORDERSCREEN,true)
                                       }
+                                      FancyToast.makeText(context,"SUCESSFUL",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show()
+//                                      navController.navigate(PAYMENTSCREEN){
+//                                          navController.popBackStack(ORDERSCREEN,true)
+//                                      }
+
                                   }
                                  else{
                                       FancyToast.makeText(context,"Stock Out !!!",FancyToast.LENGTH_LONG,FancyToast.WARNING,true).show()

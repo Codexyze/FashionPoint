@@ -1,14 +1,9 @@
 package com.example.femalepoint.presenation.screens
-
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,8 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -34,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,8 +49,6 @@ fun SeetingsScreen(navController: NavController) {
         }
     )
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
-
-
         item {
 
 
@@ -129,7 +120,7 @@ fun SeetingsScreen(navController: NavController) {
                         verticalAlignment = Alignment.CenterVertically // Align items in the center
                     ) {
                         Icon(
-                            imageVector = Icons.Default.AccountBox,
+                            imageVector = Icons.Default.Call,
                             contentDescription = "Cart",
                             modifier = Modifier.size(40.dp), // Increased icon size
                             tint = MaterialTheme.colorScheme.primary
@@ -146,10 +137,6 @@ fun SeetingsScreen(navController: NavController) {
                 }
 
             }
-
-
-
         }
-
     }
 }

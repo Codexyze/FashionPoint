@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.example.femalepoint.navigation.ORDERHISTORYDETAILS
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 
@@ -140,6 +141,15 @@ fun EachOrderItemLook(
             .clickable {
                 // Uncomment and implement navigation when needed
                 // navController.navigate(ORDERHISTORYDETAILS(...))
+                navController.navigate(ORDERHISTORYDETAILS(productCategory=productCategory,
+                    productName=productName,
+                    price = price,
+                    finalprice = finalprice,
+                    description = description,
+                    noOfUnits = noOfUnits,
+                    productId = productId,
+                    imageUri = productImage
+                    ))
             }
             .padding(8.dp),
         shape = RoundedCornerShape(12.dp),

@@ -121,7 +121,7 @@ LaunchedEffect(auth) {
                 productImage = data.imageUri,
                 productCategory = data.productCategory,
                 productName = data.productName, price = data.price,
-                finalprice = data.finalprice, description = data.description,
+               finalPrice = data.finalprice, description = data.description,
                 noOfUnits = data.noOfUnits,
                 productId = data.productId,
                 navController = navController

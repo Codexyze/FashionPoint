@@ -1,5 +1,9 @@
 package com.example.femalepoint.presenation.screens
 
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
@@ -25,18 +29,34 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.femalepoint.constants.Constants
 import com.example.femalepoint.navigation.CARTSCREEN
+import com.shashank.sony.fancytoastlib.FancyToast
 
 @Composable
 fun SeetingsScreen(navController: NavController) {
+    val permissionState= remember { mutableStateOf(false) }
+    val context= LocalContext.current
+    val permissionLauncher= rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+        onResult = {
+            if(it){
+               permissionState.value=true
+            }
+        }
+    )
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
+
 
         item {
 
@@ -82,7 +102,20 @@ fun SeetingsScreen(navController: NavController) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp), // Add padding around the card
+                        .padding(16.dp).clickable {
+                            if(permissionState.value){
+                                try {
+                                    val callIntent = Intent(Intent.ACTION_CALL).apply {
+                                        data = Uri.parse("tel:${Constants.PHONENUMBER}")
+                                    }
+                                    context.startActivity(callIntent)
+                                }catch (e :Exception){
+                                    FancyToast.makeText(context,"Error",FancyToast.LENGTH_LONG,FancyToast.ERROR,false).show()
+                                }
+                            }else{
+                                permissionLauncher.launch(android.Manifest.permission.CALL_PHONE)
+                            }
+                        }, // Add padding around the card
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.surfaceVariant,
                     ),
@@ -103,7 +136,7 @@ fun SeetingsScreen(navController: NavController) {
                         )
                         Spacer(modifier = Modifier.width(16.dp)) // Increased spacing for better layout
                         Text(
-                            text = "Next Settung",
+                            text = "Contact us",
                             fontSize = 22.sp, // Slightly larger text
                             fontWeight = FontWeight.Bold
                         )

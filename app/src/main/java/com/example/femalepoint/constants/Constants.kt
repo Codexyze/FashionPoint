@@ -9,4 +9,5 @@ object Constants {
     const val ORDER="Orders"
     const val CART="Cart"
     const val REVIEWDETAILS="ReviewDetails"
+    const val PHONENUMBER="1212121"
 }

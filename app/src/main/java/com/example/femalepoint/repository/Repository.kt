@@ -7,16 +7,21 @@ import com.example.femalepoint.constants.Constants
 import com.example.femalepoint.data.Category
 import com.example.femalepoint.data.OrderDetails
 import com.example.femalepoint.data.Product
+import com.example.femalepoint.data.Reels
 import com.example.femalepoint.data.ReviewDetails
 import com.example.femalepoint.data.Userdata
 import com.example.femalepoint.data.UsersDetails
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.storage
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class Repository @Inject constructor(private val firebaseinstance:FirebaseFirestore) {
@@ -28,7 +33,7 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
     private val currentuser = auth.currentUser?.uid ?: "" //uuid from firebase
     private val time = System.currentTimeMillis()
     private val storage=FirebaseStorage.getInstance()
-    private val storageRefrence=storage.reference
+    private val storageRefrence=storage.reference.child("videos/")
 
     suspend fun getcategory(): Flow<ResultState<List<Category>>> = callbackFlow {
         trySend(ResultState.Loading)
@@ -321,5 +326,31 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
             close()
         }
     }
+    suspend fun getAllReelsVideoFromStorage(): Flow<ResultState<List<Reels>>> = flow {
+        emit(ResultState.Loading)
+
+        try {
+            val storageRef = Firebase.storage.reference.child("videos/")
+            val listResult = storageRef.listAll().await() // Await the list of items
+
+            val reels = listResult.items.mapNotNull { item ->
+                try {
+                    Log.d("REELS", "Items found: ${listResult.items.size}")
+
+                    val url = item.downloadUrl.await().toString()
+                    Reels(url = url) // Assuming `Reels` has a `url` property
+                } catch (e: Exception) {
+                    null // Skip failed downloads
+                }
+            }
+
+            emit(ResultState.Sucess(reels))
+        } catch (e: Exception) {
+            emit(ResultState.Error(e.localizedMessage ?: "Error fetching reels"))
+        }
+    }
+
+
+
 }
 

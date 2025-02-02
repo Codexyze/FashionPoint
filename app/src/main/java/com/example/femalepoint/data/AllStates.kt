@@ -77,3 +77,8 @@ data class SearchProductState(
     val data: List<Product> = emptyList(),
     val isloading: Boolean=false
 )
+data class ReelsState(
+    val error: String="",
+    val data: List<Reels> = emptyList(),
+    val isloading: Boolean=false
+)

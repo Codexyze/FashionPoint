@@ -14,6 +14,7 @@ import com.example.femalepoint.data.OrderDetails
 import com.example.femalepoint.data.OrderProductState
 import com.example.femalepoint.data.OrderState
 import com.example.femalepoint.data.Product
+import com.example.femalepoint.data.ReelsState
 import com.example.femalepoint.data.ReviewDeatailsUploadState
 import com.example.femalepoint.data.ReviewDetails
 import com.example.femalepoint.data.SearchProductState
@@ -32,6 +33,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class MyViewModel @Inject constructor(private val repository: Repository):ViewModel() {
+
     private val _matchingProductState = MutableStateFlow(GetMatchingState())
     val matchingProductState = _matchingProductState.asStateFlow()
     private val _getAllCategoryState = MutableStateFlow(getCategorgy())
@@ -68,6 +70,9 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
     val allReviewDetails=_allRevivewDeils.asStateFlow()
     val _searchProductState=MutableStateFlow(SearchProductState())
     val searchProductState=_searchProductState.asStateFlow()
+    private val _getAllReelVideosFromStorage=MutableStateFlow(ReelsState())
+    val getAllReelVideosFromStorage=_getAllReelVideosFromStorage.asStateFlow()
+
     fun getAllCategories() {
         viewModelScope.launch {
             repository.getcategory().collectLatest { it ->
@@ -410,6 +415,23 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                     }
                     is ResultState.Error->{
                         _searchProductState.value= SearchProductState(error = it.message.toString(),isloading = false)
+                    }
+                }
+            }
+        }
+    }
+    fun getAllVideosFromServer(){
+        viewModelScope.launch {
+            repository.getAllReelsVideoFromStorage().collectLatest {
+                when(it){
+                    is ResultState.Loading->{
+                        _getAllReelVideosFromStorage.value=ReelsState(isloading = true)
+                    }
+                    is ResultState.Sucess->{
+                        _getAllReelVideosFromStorage.value=ReelsState(data = it.data,isloading = false)
+                    }
+                    is ResultState.Error->{
+                        _getAllReelVideosFromStorage.value=ReelsState(error = it.message.toString(),isloading = false)
                     }
                 }
             }

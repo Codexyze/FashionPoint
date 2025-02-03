@@ -1,6 +1,5 @@
 package com.example.femalepoint
 
-import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -20,11 +19,9 @@ import com.example.femalepoint.presenation.screens.ReelsVideoScreen
 
 
 import com.example.femalepoint.ui.theme.FemalePointTheme
-import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
 
 import dagger.hilt.android.AndroidEntryPoint
-import org.json.JSONObject
 
 val FiraSansFamily = FontFamily(
     Font(R.font.poppinsmedium, FontWeight.Light),
@@ -42,7 +39,8 @@ class MainActivity : ComponentActivity(),PaymentResultListener {
             FemalePointTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                   Box(modifier = Modifier.padding(top = innerPadding.calculateTopPadding())) {
-                   HomeScreen()
+                   //HomeScreen()
+                      ReelsVideoScreen()
                   }
                 }
                 }

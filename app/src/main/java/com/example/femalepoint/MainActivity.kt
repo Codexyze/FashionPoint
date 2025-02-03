@@ -39,8 +39,8 @@ class MainActivity : ComponentActivity(),PaymentResultListener {
             FemalePointTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                   Box(modifier = Modifier.padding(top = innerPadding.calculateTopPadding())) {
-                   //HomeScreen()
-                      ReelsVideoScreen()
+                      HomeScreen()
+
                   }
                 }
                 }

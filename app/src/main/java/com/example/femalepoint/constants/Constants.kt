@@ -10,4 +10,8 @@ object Constants {
     const val CART="Cart"
     const val REVIEWDETAILS="ReviewDetails"
     const val PHONENUMBER="1212121"//your company ph no
+    const val APPNAME="Fashion Point"
+    const val AFTERPAYMENTNOTIFICATION="Thankyou for purchasing..."
+    const val CHANNEL_ID="channel_id_1"
+    const val CHANNEL_NAME="PaymentSucessful"
 }

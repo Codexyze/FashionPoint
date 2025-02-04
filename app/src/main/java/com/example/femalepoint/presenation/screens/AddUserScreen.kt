@@ -38,6 +38,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.femalepoint.LocalNotification.createChannel
+import com.example.femalepoint.LocalNotification.pushPaymentSucessfulNotification
 import com.example.femalepoint.R
 import com.example.femalepoint.data.OrderDetails
 import com.example.femalepoint.data.UsersDetails
@@ -242,22 +244,4 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
     }
 
 }
-fun createChannel(context:Context){
-    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-        val id="channel_id_1"
-        val name="PaymentSucessful"
-        val channel=NotificationChannel(id,name,NotificationManager.IMPORTANCE_HIGH)
-        context.getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
 
-    }
-}
-fun pushPaymentSucessfulNotification(context: Context){
-    val notification = NotificationCompat.Builder(context,"channel_id_1")
-        .setContentTitle("Fashion Point").
-        setContentText("Thankyou for purchasing...").setSmallIcon(R.mipmap.ic_launcher)
-            .build()
-    context.getSystemService(NotificationManager::class.java).notify(
-        Random.nextInt(),notification
-    )
-
-}

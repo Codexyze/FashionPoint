@@ -4,9 +4,6 @@ import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Text
@@ -17,7 +14,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.media3.common.MediaItem
@@ -26,30 +22,6 @@ import androidx.media3.ui.PlayerView
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 
-//@Composable
-//fun ReelsVideoScreen(viewModel: MyViewModel= hiltViewModel()) {
-//    LaunchedEffect(Unit) {
-//        viewModel.getAllVideosFromServer()
-//
-//    }
-//    val reels=viewModel.getAllReelVideosFromStorage.collectAsState()
-//    Log.d("REELS","${reels.value.data.toString()}")
-//    Text("${reels.value.data.toString()}")
-//     if(reels.value.isloading){
-//   LoadingBar()
-//                               }
-//    else if(reels.value.error!=""){
-//        Text("Error from server side ")
-//
-//    }else{
-//        LazyColumn {
-//
-//
-//        }
-//
-//     }
-//
-//}
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ReelsVideoScreen(viewModel: MyViewModel = hiltViewModel()) {

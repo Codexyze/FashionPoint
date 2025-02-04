@@ -1,8 +1,10 @@
 package com.example.femalepoint.presenation.screens
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -22,6 +24,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,6 +34,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.femalepoint.R
@@ -40,6 +45,7 @@ import com.example.femalepoint.navigation.HOMESCREEN
 import com.example.femalepoint.navigation.ORDERSCREEN
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 import com.shashank.sony.fancytoastlib.FancyToast
+import kotlin.random.Random
 
 @Composable
 fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltViewModel(), productname:String
@@ -58,6 +64,20 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
                 FancyToast.makeText(context,"SUCESSFUL",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show()
             }
         })
+
+     permissionState.value = ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
+    LaunchedEffect(Unit) {
+        if (permissionState.value){
+            createChannel(context = context)
+
+        }else{
+
+            persmissionlauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+
+        }
+
+
+    }
     Log.d("PRODUCTID",productID)
 
     val adduserdatastate=viewModel.addUserState.collectAsState()
@@ -186,9 +206,11 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
                                       val value=noOfUnitsQuntity-noOfUnits.value.toInt()
                                      viewModel.updateStockByIdAndStock(productID = productID,
                                          stock = value)
+                                      pushPaymentSucessfulNotification(context = context)
                                       navController.navigate(HOMESCREEN){
                                           navController.popBackStack(ORDERSCREEN,true)
                                       }
+
                                       FancyToast.makeText(context,"SUCESSFUL",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show()
 
                                   }
@@ -230,6 +252,12 @@ fun createChannel(context:Context){
     }
 }
 fun pushPaymentSucessfulNotification(context: Context){
-
+    val notification = NotificationCompat.Builder(context,"channel_id_1")
+        .setContentTitle("Fashion Point").
+        setContentText("Thankyou for purchasing...").setSmallIcon(R.mipmap.ic_launcher)
+            .build()
+    context.getSystemService(NotificationManager::class.java).notify(
+        Random.nextInt(),notification
+    )
 
 }

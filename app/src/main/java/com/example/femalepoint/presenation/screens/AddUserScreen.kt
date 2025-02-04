@@ -1,6 +1,12 @@
 package com.example.femalepoint.presenation.screens
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,7 +38,6 @@ import com.example.femalepoint.data.OrderDetails
 import com.example.femalepoint.data.UsersDetails
 import com.example.femalepoint.navigation.HOMESCREEN
 import com.example.femalepoint.navigation.ORDERSCREEN
-import com.example.femalepoint.navigation.PAYMENTSCREEN
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 import com.shashank.sony.fancytoastlib.FancyToast
 
@@ -41,12 +46,24 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
                       ,productcategory:String,productimage:String,productinitailprice:String,
                       productfinalprice:String,productID:String,noOfUnitsQuntity:Int
                       ) {
+    val context= LocalContext.current
+    val permissionState= remember { mutableStateOf(false) }
+    val persmissionlauncher= rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission(), onResult = {
+            if(it){
+                //permission granted
+                permissionState.value=true
+
+            }else{
+                FancyToast.makeText(context,"SUCESSFUL",FancyToast.LENGTH_LONG,FancyToast.ERROR,true).show()
+            }
+        })
     Log.d("PRODUCTID",productID)
 
     val adduserdatastate=viewModel.addUserState.collectAsState()
     val orderstate=viewModel.orderproductstatestate.collectAsState()
     val updateStockState=viewModel.updateStockState.collectAsState()
-    val context= LocalContext.current
+
     val name = remember { mutableStateOf("") }
     val email = remember { mutableStateOf("") }
     val age = remember { mutableStateOf("") }
@@ -173,9 +190,6 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
                                           navController.popBackStack(ORDERSCREEN,true)
                                       }
                                       FancyToast.makeText(context,"SUCESSFUL",FancyToast.LENGTH_LONG,FancyToast.SUCCESS,true).show()
-//                                      navController.navigate(PAYMENTSCREEN){
-//                                          navController.popBackStack(ORDERSCREEN,true)
-//                                      }
 
                                   }
                                  else{
@@ -204,5 +218,18 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
         }
 
     }
+
+}
+fun createChannel(context:Context){
+    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+        val id="channel_id_1"
+        val name="PaymentSucessful"
+        val channel=NotificationChannel(id,name,NotificationManager.IMPORTANCE_HIGH)
+        context.getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
+
+    }
+}
+fun pushPaymentSucessfulNotification(context: Context){
+
 
 }

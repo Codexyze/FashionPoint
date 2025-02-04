@@ -29,7 +29,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.femalepoint.FiraSansFamily
-import com.example.femalepoint.MainActivity
 import com.example.femalepoint.data.Product
 import com.example.femalepoint.navigation.ALLREVIVEWSCREEN
 import com.example.femalepoint.navigation.POSTORDERSCREEN
@@ -56,7 +55,6 @@ fun OrderProductScreen(
         ).show()
     } else {
 
-        val activity = context as MainActivity
         LazyColumn {
             item {
                 Column(

@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import com.example.femalepoint.navigation.HomeScreen
-
+import com.example.femalepoint.presenation.screens.ErrorScreen
 
 
 import com.example.femalepoint.ui.theme.FemalePointTheme
@@ -39,6 +39,7 @@ class MainActivity : ComponentActivity(),PaymentResultListener {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                   Box(modifier = Modifier.padding(top = innerPadding.calculateTopPadding())) {
                       HomeScreen()
+
 
                   }
                 }

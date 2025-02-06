@@ -10,7 +10,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -41,6 +40,7 @@ import com.example.femalepoint.presenation.screens.MyOrderScreen
 import com.example.femalepoint.presenation.screens.OrderHistoryScreen
 import com.example.femalepoint.presenation.screens.OrderProductScreen
 import com.example.femalepoint.presenation.screens.PayMentScreen
+import com.example.femalepoint.presenation.screens.ReelsVideoScreen
 import com.example.femalepoint.presenation.screens.ReviewWritingAndUploadingScreen
 import com.example.femalepoint.presenation.screens.SearchScreen
 import com.example.femalepoint.presenation.screens.SeetingsScreen
@@ -143,6 +143,9 @@ LaunchedEffect(auth) {
         }
         composable<CARTSCREEN> {
             CartScreen(navController = navController)
+        }
+        composable<REELSVIDEOSCREEN> {
+            ReelsVideoScreen(navController=navController)
         }
 
 

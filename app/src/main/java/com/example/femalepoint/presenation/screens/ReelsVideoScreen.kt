@@ -19,12 +19,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
+import androidx.navigation.NavHostController
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ReelsVideoScreen(viewModel: MyViewModel = hiltViewModel()) {
+fun ReelsVideoScreen(viewModel: MyViewModel = hiltViewModel(), navController: NavHostController) {
     LaunchedEffect(Unit) {
         viewModel.getAllVideosFromServer()
     }

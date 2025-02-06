@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.VideoLibrary
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.femalepoint.constants.Constants
 import com.example.femalepoint.navigation.CARTSCREEN
+import com.example.femalepoint.navigation.REELSVIDEOSCREEN
 import com.shashank.sony.fancytoastlib.FancyToast
 
 @Composable
@@ -135,6 +137,42 @@ fun SeetingsScreen(navController: NavController) {
                     }
 
                 }
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp).clickable {
+                           navController.navigate(REELSVIDEOSCREEN)
+                        }, // Add padding around the card
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                    shape = RoundedCornerShape(12.dp) // Rounded corners for a better look
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp), // Add internal padding for better spacing
+                        verticalAlignment = Alignment.CenterVertically // Align items in the center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.VideoLibrary,
+                            contentDescription = "Reels",
+                            modifier = Modifier.size(40.dp), // Increased icon size
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.width(16.dp)) // Increased spacing for better layout
+                        Text(
+                            text = "Reels",
+                            fontSize = 22.sp, // Slightly larger text
+                            fontWeight = FontWeight.Bold
+                        )
+
+                    }
+
+                }
+
+
 
             }
         }

@@ -40,7 +40,6 @@ class MainActivity : ComponentActivity(),PaymentResultListener {
                   Box(modifier = Modifier.padding(top = innerPadding.calculateTopPadding())) {
                       HomeScreen()
 
-
                   }
                 }
                 }

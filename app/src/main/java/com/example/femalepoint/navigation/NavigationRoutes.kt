@@ -1,6 +1,5 @@
 package com.example.femalepoint.navigation
 
-import com.example.femalepoint.data.Product
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -56,3 +55,6 @@ object SETTINGSSCREEN
 
 @Serializable
 object CARTSCREEN
+
+@Serializable
+object REELSVIDEOSCREEN

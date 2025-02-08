@@ -58,3 +58,10 @@ object CARTSCREEN
 
 @Serializable
 object REELSVIDEOSCREEN
+
+@Serializable
+data class ORDERSCREENFROMCART(
+    val productCategory: String,val productName: String,
+    val price: Int,val finalprice: Int,val description: String,val noOfUnits: Int,
+    val productId: String,val imageUri:String
+)

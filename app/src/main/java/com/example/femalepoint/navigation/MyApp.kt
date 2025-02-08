@@ -39,6 +39,7 @@ import com.example.femalepoint.presenation.screens.MatchingProducts
 import com.example.femalepoint.presenation.screens.MyOrderScreen
 import com.example.femalepoint.presenation.screens.OrderHistoryScreen
 import com.example.femalepoint.presenation.screens.OrderProductScreen
+import com.example.femalepoint.presenation.screens.OrderProductScreenFromCart
 import com.example.femalepoint.presenation.screens.PayMentScreen
 import com.example.femalepoint.presenation.screens.ReelsVideoScreen
 import com.example.femalepoint.presenation.screens.ReviewWritingAndUploadingScreen
@@ -147,11 +148,22 @@ LaunchedEffect(auth) {
         composable<REELSVIDEOSCREEN> {
             ReelsVideoScreen(navController=navController)
         }
-
-
+        composable<ORDERSCREENFROMCART> {
+            val data:ORDERSCREENFROMCART=it.toRoute()
+            OrderProductScreenFromCart(
+                navController = navController,
+                produt_id = data.productId,
+                imageUri = data.imageUri,
+                price = data.price,
+                finalprice = data.finalprice,
+                name = data.productName,
+                discription = data.description,
+                category = data.productCategory,
+                noOfUnits=data.noOfUnits
+            )
+        }
 
     }
-
 
 }
 

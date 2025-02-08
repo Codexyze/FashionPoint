@@ -25,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.femalepoint.navigation.ORDERSCREEN
+import com.example.femalepoint.navigation.ORDERSCREENFROMCART
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 
@@ -84,10 +85,15 @@ fun EachCartItemLook(
             .fillMaxWidth()
             .padding(8.dp).clickable {
                //todo
-                navController.navigate(ORDERSCREEN(
-                    produt_id = productId, imageUri = productImage,
-                    price = price, finalprice = finalprice, name = productName,
-                    discription = description, category = productCategory, noOfUnits = noOfUnits
+                navController.navigate(ORDERSCREENFROMCART(
+                    productCategory = productCategory,
+                    productName = productName,
+                    price = price,
+                    finalprice = finalprice,
+                    description = description,
+                    noOfUnits = noOfUnits,
+                    productId = productId,
+                    imageUri = productImage
                 ))
 
             }

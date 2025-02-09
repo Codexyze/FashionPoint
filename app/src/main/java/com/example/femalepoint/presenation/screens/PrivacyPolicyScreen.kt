@@ -40,7 +40,7 @@ fun PrivacyPolicyScreen() {
             text = "Privacy Policy",
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.tertiary
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -96,7 +96,7 @@ fun PolicySection(title: String, content: @Composable ColumnScope.() -> Unit) {
             text = title,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.tertiary
         )
         Spacer(modifier = Modifier.height(4.dp))
         content()

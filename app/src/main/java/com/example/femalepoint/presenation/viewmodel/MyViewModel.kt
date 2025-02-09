@@ -18,6 +18,7 @@ import com.example.femalepoint.data.ReelsState
 import com.example.femalepoint.data.ReviewDeatailsUploadState
 import com.example.femalepoint.data.ReviewDetails
 import com.example.femalepoint.data.SearchProductState
+import com.example.femalepoint.data.StoreUserDataForOrderState
 import com.example.femalepoint.data.UpdateStockState
 import com.example.femalepoint.data.UsersDetails
 import com.example.femalepoint.data.getCategorgy
@@ -72,6 +73,8 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
     val searchProductState=_searchProductState.asStateFlow()
     private val _getAllReelVideosFromStorage=MutableStateFlow(ReelsState())
     val getAllReelVideosFromStorage=_getAllReelVideosFromStorage.asStateFlow()
+    private val _userDetailsForOrderState= MutableStateFlow(StoreUserDataForOrderState())
+    val userDetailsForOrderState= _userDetailsForOrderState.asStateFlow()
 
     fun getAllCategories() {
         viewModelScope.launch {
@@ -436,6 +439,28 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                 }
             }
         }
+    }
+    fun addUserDetailsForOrder(userDetails:OrderDetails){
+        viewModelScope.launch {
+            repository.addUserDetailsForOrder(userDetails = userDetails).collectLatest {
+                when(it){
+                    is ResultState.Loading->{
+                        _userDetailsForOrderState.value=StoreUserDataForOrderState(isloading = true)
+
+                    }
+                    is ResultState.Error->{
+                        _userDetailsForOrderState.value=StoreUserDataForOrderState(error = it.message.toString(), isloading = false)
+                    }
+                    is ResultState.Sucess->{
+                        _userDetailsForOrderState.value=StoreUserDataForOrderState(isloading = false, data = it.data)
+                    }
+                }
+
+            }
+
+
+        }
+
     }
 
 }

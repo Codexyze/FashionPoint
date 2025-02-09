@@ -65,3 +65,6 @@ data class ORDERSCREENFROMCART(
     val price: Int,val finalprice: Int,val description: String,val noOfUnits: Int,
     val productId: String,val imageUri:String
 )
+
+@Serializable
+object PRIVACYPOLICYSCREEN

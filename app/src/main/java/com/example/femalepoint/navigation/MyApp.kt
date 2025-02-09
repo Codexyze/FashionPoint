@@ -40,6 +40,7 @@ import com.example.femalepoint.presenation.screens.OrderHistoryScreen
 import com.example.femalepoint.presenation.screens.OrderProductScreen
 import com.example.femalepoint.presenation.screens.OrderProductScreenFromCart
 import com.example.femalepoint.presenation.screens.PayMentScreen
+import com.example.femalepoint.presenation.screens.PrivacyPolicyScreen
 import com.example.femalepoint.presenation.screens.ReelsVideoScreen
 import com.example.femalepoint.presenation.screens.ReviewWritingAndUploadingScreen
 import com.example.femalepoint.presenation.screens.SearchScreen
@@ -160,6 +161,9 @@ LaunchedEffect(auth) {
                 category = data.productCategory,
                 noOfUnits=data.noOfUnits
             )
+        }
+        composable<PRIVACYPOLICYSCREEN> {
+            PrivacyPolicyScreen()
         }
 
     }

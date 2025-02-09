@@ -82,7 +82,7 @@ data class ReelsState(
     val data: List<Reels> = emptyList(),
     val isloading: Boolean=false
 )
-data class StoreUUserDataForOrderState(
+data class StoreUserDataForOrderState(
     val error: String="",
     val data: String="",
     val isloading: Boolean=false

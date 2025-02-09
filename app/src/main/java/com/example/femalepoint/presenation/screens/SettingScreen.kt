@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PrivacyTip
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.VideoLibrary
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.femalepoint.constants.Constants
 import com.example.femalepoint.navigation.CARTSCREEN
+import com.example.femalepoint.navigation.PRIVACYPOLICYSCREEN
 import com.example.femalepoint.navigation.REELSVIDEOSCREEN
 import com.shashank.sony.fancytoastlib.FancyToast
 
@@ -172,11 +174,49 @@ fun SeetingsScreen(navController: NavController) {
                     }
 
                 }
+
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp).clickable {
-                          //Privacy Policy Screen
+
+
+                            //Privacy Policy Screen
+                        }, // Add padding around the card
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                    shape = RoundedCornerShape(12.dp) // Rounded corners for a better look
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp), // Add internal padding for better spacing
+                        verticalAlignment = Alignment.CenterVertically // Align items in the center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Profile Setup",
+                            modifier = Modifier.size(40.dp), // Increased icon size
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.width(16.dp)) // Increased spacing for better layout
+                        Text(
+                            text = "Profile Setup",
+                            fontSize = 22.sp, // Slightly larger text
+                            fontWeight = FontWeight.Bold
+                        )
+
+                    }
+
+                }
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp).clickable {
+                            //Privacy Policy Screen
+                            navController.navigate(PRIVACYPOLICYSCREEN)
                         }, // Add padding around the card
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -206,6 +246,7 @@ fun SeetingsScreen(navController: NavController) {
                     }
 
                 }
+
 
 
 

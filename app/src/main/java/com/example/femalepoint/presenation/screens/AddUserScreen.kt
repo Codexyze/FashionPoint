@@ -34,7 +34,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -47,7 +46,6 @@ import com.example.femalepoint.navigation.HOMESCREEN
 import com.example.femalepoint.navigation.ORDERSCREEN
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 import com.shashank.sony.fancytoastlib.FancyToast
-import kotlin.random.Random
 
 @Composable
 fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltViewModel(), productname:String

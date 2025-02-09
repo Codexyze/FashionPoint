@@ -14,4 +14,5 @@ object Constants {
     const val AFTERPAYMENTNOTIFICATION="Thankyou for purchasing..."
     const val CHANNEL_ID="channel_id_1"
     const val CHANNEL_NAME="PaymentSucessful"
+    const val USERDEATILSFORORDER="UserDetailsForOrder"
 }

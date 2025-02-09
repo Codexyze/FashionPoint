@@ -349,8 +349,20 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
             emit(ResultState.Error(e.localizedMessage ?: "Error fetching reels"))
         }
     }
+    suspend fun addUserDetailsForOrder(userDetails:OrderDetails):Flow<ResultState<String>> = callbackFlow {
+        trySend(ResultState.Loading)
+        firebaseinstance.collection(Constants.USERDEATILSFORORDER).document(currentuser)
+            .set(userDetails)
+            .addOnSuccessListener {
+                trySend(ResultState.Sucess("User Details Added"))
 
-
+            }.addOnFailureListener {
+                 trySend(ResultState.Error(it.message.toString()))
+            }
+        awaitClose {
+            close()
+        }
+    }
 
 }
 

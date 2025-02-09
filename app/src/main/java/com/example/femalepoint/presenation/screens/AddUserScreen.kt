@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -117,11 +118,13 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
             verticalArrangement = Arrangement.Center) {
             LazyColumn {
               item {
+                  Spacer(modifier = Modifier.height(16.dp))
+                  Text("Shopping details", fontSize = 35.sp)
 
                   Image(
                       painter = painterResource(R.drawable.shopping),
                       contentDescription = "shopping", modifier = Modifier
-                          .fillMaxWidth(0.8f)
+                          .fillMaxWidth(0.85f)
                           .height(350.dp)
                   )
                   OutlinedTextField(value = name.value, onValueChange = {

@@ -41,6 +41,7 @@ import com.example.femalepoint.presenation.screens.OrderProductScreen
 import com.example.femalepoint.presenation.screens.OrderProductScreenFromCart
 import com.example.femalepoint.presenation.screens.PayMentScreen
 import com.example.femalepoint.presenation.screens.PrivacyPolicyScreen
+import com.example.femalepoint.presenation.screens.ProfileScreen
 import com.example.femalepoint.presenation.screens.ReelsVideoScreen
 import com.example.femalepoint.presenation.screens.ReviewWritingAndUploadingScreen
 import com.example.femalepoint.presenation.screens.SearchScreen
@@ -164,6 +165,9 @@ LaunchedEffect(auth) {
         }
         composable<PRIVACYPOLICYSCREEN> {
             PrivacyPolicyScreen()
+        }
+        composable<PROFILESCREEN> {
+            ProfileScreen(navController = navController)
         }
 
     }

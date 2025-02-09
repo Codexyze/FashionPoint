@@ -38,6 +38,7 @@ import androidx.navigation.NavController
 import com.example.femalepoint.constants.Constants
 import com.example.femalepoint.navigation.CARTSCREEN
 import com.example.femalepoint.navigation.PRIVACYPOLICYSCREEN
+import com.example.femalepoint.navigation.PROFILESCREEN
 import com.example.femalepoint.navigation.REELSVIDEOSCREEN
 import com.shashank.sony.fancytoastlib.FancyToast
 
@@ -179,10 +180,8 @@ fun SeetingsScreen(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp).clickable {
-
-
-                            //Privacy Policy Screen
-                        }, // Add padding around the card
+                           navController.navigate(PROFILESCREEN)//profile navigation
+                        },
                     colors = CardDefaults.cardColors(
                         containerColor = MaterialTheme.colorScheme.surfaceVariant,
                     ),

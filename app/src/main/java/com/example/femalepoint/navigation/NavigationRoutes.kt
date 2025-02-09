@@ -68,3 +68,6 @@ data class ORDERSCREENFROMCART(
 
 @Serializable
 object PRIVACYPOLICYSCREEN
+
+@Serializable
+object  PROFILESCREEN

@@ -27,11 +27,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.femalepoint.R
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 
 @Composable
-fun ProfileScreen(viewModel: MyViewModel= hiltViewModel()) {
+fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavController) {
     val getLocationandDataState = viewModel.userDataState.collectAsState()
     val name = remember { mutableStateOf("") }
     val email = remember { mutableStateOf("") }
@@ -141,6 +142,7 @@ fun ProfileScreen(viewModel: MyViewModel= hiltViewModel()) {
                         ) {
                             Text(text = "Update")
                         }
+                        Spacer(modifier = Modifier.height(200.dp))
 
 
                     }

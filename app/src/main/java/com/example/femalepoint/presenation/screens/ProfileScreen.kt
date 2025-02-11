@@ -17,6 +17,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,12 +30,16 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.femalepoint.R
+import com.example.femalepoint.data.OrderDetails
+import com.example.femalepoint.data.Userdata
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavController) {
-    val getLocationandDataState = viewModel.userDataState.collectAsState()
+  val userDataStoreforOrderState=viewModel.userDetailsForOrderState.collectAsState()
     val name = remember { mutableStateOf("") }
+    val id = remember { mutableStateOf("") }
     val email = remember { mutableStateOf("") }
     val phonenumber = remember { mutableStateOf("") }
     val phonenumber2 = remember { mutableStateOf("") }
@@ -44,10 +49,18 @@ fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavCont
     val state = remember { mutableStateOf("") }
     val age = remember { mutableStateOf("") }
     val nearbyPoints = remember { mutableStateOf("") }
+    LaunchedEffect (Unit){
+        id.value=FirebaseAuth.getInstance().currentUser?.uid.toString()
+    }
     //name, email,phonenumber,phonenumber2,address,image,pincode,state,age,nearbyPoints
-    if (getLocationandDataState.value.isloading) {
+    if (userDataStoreforOrderState.value.isloading) {
         LoadingIndicator()
-    } else {
+    }
+    else if(userDataStoreforOrderState.value.error.isNotEmpty()) {
+          ErrorScreen()
+
+    }
+    else {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -123,13 +136,21 @@ fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavCont
                         OutlinedButton(
                             onClick = {
                                 try {
-                                    viewModel.addUserLocationDetails(
-                                        name = name.value, phonenumber = phonenumber.value,
-                                        email = email.value, phonenumber2 = phonenumber2.value,
-                                        pincode = pincode.value, address = address.value,
-                                        state = state.value, age = age.value,
+                                    val userData=Userdata(
+                                        id =id.value,
+                                        name = name.value,
+                                        email = email.value,
+                                        phonenumber = phonenumber.value,
+                                        phonenumber2 = phonenumber2.value,
+                                        address = address.value,
+                                        pincode = pincode.value,
+                                        state = state.value,
+                                        age = age.value,
                                         nearbyPoints = nearbyPoints.value
                                     )
+                                   viewModel.addUserDetailsForOrder(userData = userData)
+
+                                // viewModel.addUserDetailsForOrder()
                                 } catch (e: Exception) {
 
                                 }

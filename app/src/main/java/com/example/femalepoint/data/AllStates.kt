@@ -87,3 +87,8 @@ data class StoreUserDataForOrderState(
     val data: String="",
     val isloading: Boolean=false
 )
+data class UserDataStoreState(
+    val error: String="",
+    val data:Userdata?=null,
+    val isloading: Boolean=false
+)

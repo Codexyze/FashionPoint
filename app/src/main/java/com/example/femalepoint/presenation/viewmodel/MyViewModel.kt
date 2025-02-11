@@ -20,6 +20,8 @@ import com.example.femalepoint.data.ReviewDetails
 import com.example.femalepoint.data.SearchProductState
 import com.example.femalepoint.data.StoreUserDataForOrderState
 import com.example.femalepoint.data.UpdateStockState
+import com.example.femalepoint.data.UserDataStoreState
+import com.example.femalepoint.data.Userdata
 import com.example.femalepoint.data.UsersDetails
 import com.example.femalepoint.data.getCategorgy
 import com.example.femalepoint.data.getProduct
@@ -75,6 +77,8 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
     val getAllReelVideosFromStorage=_getAllReelVideosFromStorage.asStateFlow()
     private val _userDetailsForOrderState= MutableStateFlow(StoreUserDataForOrderState())
     val userDetailsForOrderState= _userDetailsForOrderState.asStateFlow()
+    private val _getUserDataForStoring=MutableStateFlow(UserDataStoreState())
+    val getUserDataForStoring=_getUserDataForStoring.asStateFlow()
 
     fun getAllCategories() {
         viewModelScope.launch {
@@ -440,9 +444,9 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
             }
         }
     }
-    fun addUserDetailsForOrder(userDetails:OrderDetails){
+    fun addUserDetailsForOrder(userData:Userdata){
         viewModelScope.launch {
-            repository.addUserDetailsForOrder(userDetails = userDetails).collectLatest {
+            repository.addUserDetailsForOrder(userDetails = userData).collectLatest {
                 when(it){
                     is ResultState.Loading->{
                         _userDetailsForOrderState.value=StoreUserDataForOrderState(isloading = true)
@@ -460,6 +464,27 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
 
 
         }
+
+    }
+    fun getUserDetailsForOrder(){
+        viewModelScope.launch {
+
+            repository.getUserDetailsForOrder().collectLatest {
+                when(it){
+                    is ResultState.Loading->{
+                        _getUserDataForStoring.value=UserDataStoreState(isloading = true)
+                    }
+                    is ResultState.Error->{
+                        _getUserDataForStoring.value=UserDataStoreState(error = it.message.toString(), isloading = false)
+                    }
+                    is ResultState.Sucess->{
+                        _getUserDataForStoring.value=UserDataStoreState(isloading = false, data = it.data)
+                    }
+                }
+            }
+        }
+
+
 
     }
 

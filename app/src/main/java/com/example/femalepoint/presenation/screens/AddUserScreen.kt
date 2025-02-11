@@ -55,6 +55,19 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
                       ) {
     val context= LocalContext.current
     val permissionState= remember { mutableStateOf(false) }
+    val getDataForStoring=viewModel.getUserDataForStoring.collectAsState()
+    val name = remember { mutableStateOf("") }
+    val email = remember { mutableStateOf("") }
+    val age = remember { mutableStateOf("") }
+    val adress = remember { mutableStateOf("") }
+    val phonenumber= remember { mutableStateOf("") }
+    val phonenumber2= remember { mutableStateOf("") }
+    val pincode= remember { mutableStateOf("") }
+    val state= remember { mutableStateOf("") }
+    val nearbyPoints= remember { mutableStateOf("") }
+    val noOfUnits= remember { mutableStateOf("") }
+
+    val data = getDataForStoring.value.data
     val persmissionlauncher= rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission(), onResult = {
             if(it){
@@ -68,6 +81,19 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
 
      permissionState.value = ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
     LaunchedEffect(Unit) {
+        viewModel.getUserDetailsForOrder()
+        data?.let {
+            name.value = it.name ?: ""
+            email.value = it.email ?: ""
+            age.value = it.age ?: ""
+            adress.value = it.address ?: ""
+            phonenumber.value = it.phonenumber ?: ""
+            phonenumber2.value = it.phonenumber2 ?: ""
+            pincode.value = it.pincode ?: ""
+            state.value = it.state ?: ""
+            nearbyPoints.value = it.nearbyPoints ?: ""
+            Log.d("DATAAAA",it.toString())
+        }
         if (permissionState.value){
             createChannel(context = context)
 
@@ -78,23 +104,16 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
         }
 
 
+
     }
     Log.d("PRODUCTID",productID)
+    Log.d("DATAFROM",data.toString())
 
     val adduserdatastate=viewModel.addUserState.collectAsState()
     val orderstate=viewModel.orderproductstatestate.collectAsState()
     val updateStockState=viewModel.updateStockState.collectAsState()
 
-    val name = remember { mutableStateOf("") }
-    val email = remember { mutableStateOf("") }
-    val age = remember { mutableStateOf("") }
-    val adress = remember { mutableStateOf("") }
-    val phonenumber= remember { mutableStateOf("") }
-    val phonenumber2= remember { mutableStateOf("") }
-    val pincode= remember { mutableStateOf("") }
-    val state= remember { mutableStateOf("") }
-    val nearbyPoints= remember { mutableStateOf("") }
-    val noOfUnits= remember { mutableStateOf("") }
+
     if (adduserdatastate.value.isloading||orderstate.value.isloading||updateStockState.value.isloading){
  Column(modifier = Modifier.fillMaxSize(),
      horizontalAlignment = Alignment.CenterHorizontally,
@@ -130,43 +149,67 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
                   OutlinedTextField(value = name.value, onValueChange = {
                       name.value=it
                   }, placeholder = {
-                      Text("Name")
+                      Text(if(name.value.isNotEmpty()) name.value else "Name")
                   })
                   Spacer(modifier = Modifier.height(16.dp))
 
                   OutlinedTextField(value = email.value, onValueChange = {
                       email.value=it
                   }, placeholder = {
-                      Text("Email")
+                     Text(if (email.value.isNotEmpty()) email.value else "Email")
                   })
                   Spacer(modifier = Modifier.height(16.dp))
 
                   OutlinedTextField(value = age.value, onValueChange = {
                       age.value=it
                   }, placeholder = {
-                      Text("Age")
+                     // Text("Age")
+                      Text(if (age.value.isNotEmpty()) age.value else "Age")
                   })
 
                   Spacer(modifier = Modifier.height(16.dp))
                   OutlinedTextField(value = adress.value, onValueChange = { adress.value=it },
-                      placeholder = { Text("Adress") })
+                      placeholder = {
+                          //Text("Adress")
+                          Text(if (adress.value.isNotEmpty()) adress.value else "Adress")
+                      })
 
                   Spacer(modifier = Modifier.height(16.dp))
                   OutlinedTextField(value = phonenumber.value, onValueChange = { phonenumber.value=it },
-                      placeholder = { Text("Phonenumber") })
+                      placeholder = {
+                         // Text("Phonenumber")
+                          Text(if (phonenumber.value.isNotEmpty()) phonenumber.value else "Phonenumber")
+
+                      })
 
                   Spacer(modifier = Modifier.height(16.dp))
                   OutlinedTextField(value = phonenumber2.value, onValueChange = { phonenumber2.value=it },
-                      placeholder = { Text("Phonenumber2") })
+                      placeholder = {
+                          //Text("Phonenumber2")
+                          Text(if (phonenumber2.value.isNotEmpty()) phonenumber2.value else "Phonenumber2")
+
+                      })
                   Spacer(modifier = Modifier.height(16.dp))
                   OutlinedTextField(value = pincode.value, onValueChange = { pincode.value=it },
-                      placeholder = { Text("Pincode") })
+                      placeholder = {
+                          //Text("Pincode")
+                          Text(if (pincode.value.isNotEmpty()) pincode.value else "Pincode")
+
+                      })
                   Spacer(modifier = Modifier.height(16.dp))
                   OutlinedTextField(value = state.value, onValueChange = { state.value=it },
-                      placeholder = { Text("State") })
+                      placeholder = {
+                        //  Text("State")
+                          Text(if (state.value.isNotEmpty()) state.value else "State")
+                      })
                   Spacer(modifier = Modifier.height(16.dp))
-                  OutlinedTextField(value = nearbyPoints.value, onValueChange = { nearbyPoints.value=it },
-                      placeholder = { Text("NearbyPoints") })
+                  OutlinedTextField(value = nearbyPoints.value, onValueChange = {
+                      nearbyPoints.value=it },
+                      placeholder = {
+                      //    Text("NearbyPoints")
+                          Text(if (nearbyPoints.value.isNotEmpty()) nearbyPoints.value else "NearbyPoints")
+
+                      })
                   Spacer(modifier = Modifier.height(16.dp))
                  OutlinedTextField(value = noOfUnits.value, onValueChange = {
                      noOfUnits.value=it

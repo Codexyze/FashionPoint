@@ -34,6 +34,7 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
     private val time = System.currentTimeMillis()
     private val storage=FirebaseStorage.getInstance()
     private val storageRefrence=storage.reference.child("videos/")
+    private val dataForUserDataStore=firebaseinstance.collection(Constants.USERDEATILSFORORDER).document(currentuser).get()
 
     suspend fun getcategory(): Flow<ResultState<List<Category>>> = callbackFlow {
         trySend(ResultState.Loading)
@@ -349,7 +350,7 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
             emit(ResultState.Error(e.localizedMessage ?: "Error fetching reels"))
         }
     }
-    suspend fun addUserDetailsForOrder(userDetails:OrderDetails):Flow<ResultState<String>> = callbackFlow {
+    suspend fun addUserDetailsForOrder(userDetails:Userdata):Flow<ResultState<String>> = callbackFlow {
         trySend(ResultState.Loading)
         firebaseinstance.collection(Constants.USERDEATILSFORORDER).document(currentuser)
             .set(userDetails)
@@ -359,6 +360,18 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
             }.addOnFailureListener {
                  trySend(ResultState.Error(it.message.toString()))
             }
+        awaitClose {
+            close()
+        }
+    }
+    suspend fun getUserDetailsForOrder():Flow<ResultState<Userdata>> = callbackFlow {
+        trySend(ResultState.Loading)
+       dataForUserDataStore .addOnSuccessListener {
+            val data = it.toObject(Userdata::class.java)
+            trySend(ResultState.Sucess(data!!))
+        }.addOnFailureListener {
+            trySend(ResultState.Error(it.message.toString()))
+        }
         awaitClose {
             close()
         }

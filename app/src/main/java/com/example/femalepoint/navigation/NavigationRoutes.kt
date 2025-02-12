@@ -71,3 +71,6 @@ object PRIVACYPOLICYSCREEN
 
 @Serializable
 object  PROFILESCREEN
+
+@Serializable
+object EXPENSETRACKINGSCREEN

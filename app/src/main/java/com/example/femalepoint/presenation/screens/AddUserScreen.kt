@@ -273,7 +273,7 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
                                       name = name.value,
                                       email = email.value,
                                       age = age.value
-                                  )
+                                  )//deprecated feature
                                   val order=OrderDetails(
                                      productID = productID,
                                       address = adress.value,

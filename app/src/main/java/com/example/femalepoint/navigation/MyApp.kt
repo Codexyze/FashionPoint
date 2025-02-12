@@ -32,6 +32,7 @@ import com.example.female.AddUserDataScreen
 import com.example.femalepoint.presenation.screens.AllProductScreen
 import com.example.femalepoint.presenation.screens.AllReviewScreen
 import com.example.femalepoint.presenation.screens.CartScreen
+import com.example.femalepoint.presenation.screens.ExpenseTrackingScreen
 import com.example.femalepoint.presenation.screens.GetcategoryScreen
 import com.example.femalepoint.presenation.screens.LoginScreen
 import com.example.femalepoint.presenation.screens.MatchingProducts
@@ -168,6 +169,9 @@ LaunchedEffect(auth) {
         }
         composable<PROFILESCREEN> {
             ProfileScreen(navController = navController)
+        }
+        composable<EXPENSETRACKINGSCREEN> {
+            ExpenseTrackingScreen(navController = navController)
         }
 
     }

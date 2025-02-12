@@ -1,9 +1,7 @@
-package com.example.femalepoint.presenation.screens
+package com.example.female
 
+import com.example.femalepoint.presenation.screens.ErrorScreen
 import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
@@ -82,18 +80,18 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
      permissionState.value = ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
     LaunchedEffect(Unit) {
         viewModel.getUserDetailsForOrder()
-        data?.let {
-            name.value = it.name ?: ""
-            email.value = it.email ?: ""
-            age.value = it.age ?: ""
-            adress.value = it.address ?: ""
-            phonenumber.value = it.phonenumber ?: ""
-            phonenumber2.value = it.phonenumber2 ?: ""
-            pincode.value = it.pincode ?: ""
-            state.value = it.state ?: ""
-            nearbyPoints.value = it.nearbyPoints ?: ""
-            Log.d("DATAAAA",it.toString())
-        }
+//        data?.let {
+//            name.value = it.name ?: ""
+//            email.value = it.email ?: ""
+//            age.value = it.age ?: ""
+//            adress.value = it.address ?: ""
+//            phonenumber.value = it.phonenumber ?: ""
+//            phonenumber2.value = it.phonenumber2 ?: ""
+//            pincode.value = it.pincode ?: ""
+//            state.value = it.state ?: ""
+//            nearbyPoints.value = it.nearbyPoints ?: ""
+//            Log.d("DATAAAA",it.toString())
+//        }
         if (permissionState.value){
             createChannel(context = context)
 
@@ -127,11 +125,12 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center) {
 
-            Text("ERROR FROM SERVER SIDE ")
+              ErrorScreen()
         }
     }
 
     else{
+
         Column(modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center) {
@@ -146,68 +145,116 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
                           .fillMaxWidth(0.85f)
                           .height(350.dp)
                   )
+                  if (data?.name?.isNotEmpty() ==true){
+                      name.value=data?.name.toString()
+                  }else{
+                      name.value=""
+                  }
                   OutlinedTextField(value = name.value, onValueChange = {
                       name.value=it
                   }, placeholder = {
-                      Text(if(name.value.isNotEmpty()) name.value else "Name")
+                      Text(if(data?.name?.isNotEmpty() ==true){"Name: ${data.name.toString()}"} else "Name")
                   })
                   Spacer(modifier = Modifier.height(16.dp))
-
+                  if (data?.email?.isNotEmpty() ==true){
+                      email.value=data.email.toString()
+                  }else{
+                      email.value=""
+                  }
                   OutlinedTextField(value = email.value, onValueChange = {
                       email.value=it
                   }, placeholder = {
-                     Text(if (email.value.isNotEmpty()) email.value else "Email")
+                     Text( if(data?.email?.isNotEmpty() ==true){"Email: ${data.email.toString()}"} else "Email")
                   })
                   Spacer(modifier = Modifier.height(16.dp))
-
+                    if (data?.age?.isNotEmpty() ==true){
+                        age.value=data?.age.toString()
+                    }else{
+                        age.value=""
+                    }
                   OutlinedTextField(value = age.value, onValueChange = {
                       age.value=it
                   }, placeholder = {
                      // Text("Age")
-                      Text(if (age.value.isNotEmpty()) age.value else "Age")
+                      Text( if(data?.age?.isNotEmpty() ==true){"age: ${data.age.toString()}"} else "Age")
                   })
 
                   Spacer(modifier = Modifier.height(16.dp))
+                  if (data?.address?.isNotEmpty() ==true){
+                      adress.value=data?.address.toString()
+                  }else{
+                      adress.value=""
+
+                  }
                   OutlinedTextField(value = adress.value, onValueChange = { adress.value=it },
                       placeholder = {
                           //Text("Adress")
-                          Text(if (adress.value.isNotEmpty()) adress.value else "Adress")
+                          Text( if(data?.address?.isNotEmpty() ==true){"Address: ${data.address.toString()}"} else "Address")
                       })
 
                   Spacer(modifier = Modifier.height(16.dp))
+
+                  if (data?.phonenumber?.isNotEmpty() ==true){
+                      phonenumber.value=data.phonenumber.toString()
+                  }else{
+                      phonenumber.value=""
+
+                  }
                   OutlinedTextField(value = phonenumber.value, onValueChange = { phonenumber.value=it },
                       placeholder = {
                          // Text("Phonenumber")
-                          Text(if (phonenumber.value.isNotEmpty()) phonenumber.value else "Phonenumber")
+                          Text( if(data?.phonenumber?.isNotEmpty() ==true){"Phonenumber: ${data.phonenumber.toString()}"} else "Phonenumber")
 
                       })
+
+                      if (data?.phonenumber2?.isNotEmpty() ==true){
+                          phonenumber2.value=data.phonenumber2.toString()
+                      }else{
+                          phonenumber2.value=""
+                      }
+
 
                   Spacer(modifier = Modifier.height(16.dp))
                   OutlinedTextField(value = phonenumber2.value, onValueChange = { phonenumber2.value=it },
                       placeholder = {
                           //Text("Phonenumber2")
-                          Text(if (phonenumber2.value.isNotEmpty()) phonenumber2.value else "Phonenumber2")
+                          Text( if(data?.phonenumber2?.isNotEmpty() ==true){"Phonenumber2: ${data.phonenumber2.toString()}"} else "Phonenumber2")
 
                       })
                   Spacer(modifier = Modifier.height(16.dp))
+                  if (data?.pincode?.isNotEmpty() ==true){
+                      pincode.value=data.pincode.toString()
+                  }else{
+                      pincode.value=""
+                  }
                   OutlinedTextField(value = pincode.value, onValueChange = { pincode.value=it },
                       placeholder = {
                           //Text("Pincode")
-                          Text(if (pincode.value.isNotEmpty()) pincode.value else "Pincode")
+                          Text( if(data?.pincode?.isNotEmpty() ==true){"Pincode: ${data.pincode.toString()}"} else "Pincode")
 
                       })
                   Spacer(modifier = Modifier.height(16.dp))
+                  if (data?.state?.isNotEmpty() ==true){
+                      state.value=data.state.toString()
+                  }else{
+                      state.value=""
+                  }
                   OutlinedTextField(value = state.value, onValueChange = { state.value=it },
                       placeholder = {
                         //  Text("State")
-                          Text(if (state.value.isNotEmpty()) state.value else "State")
+                          Text( if(data?.state?.isNotEmpty() ==true){"State: ${data.state.toString()}"} else "State")
                       })
                   Spacer(modifier = Modifier.height(16.dp))
+                  if (data?.nearbyPoints?.isNotEmpty() ==true){
+                      nearbyPoints.value=data.nearbyPoints.toString()
+                  }else{
+                      nearbyPoints.value=""
+                  }
                   OutlinedTextField(value = nearbyPoints.value, onValueChange = {
                       nearbyPoints.value=it },
                       placeholder = {
                       //    Text("NearbyPoints")
-                          Text(if (nearbyPoints.value.isNotEmpty()) nearbyPoints.value else "NearbyPoints")
+                          Text( if(data?.nearbyPoints?.isNotEmpty() ==true){"NearbyPoints: ${data.nearbyPoints.toString()}"} else "Landmark")
 
                       })
                   Spacer(modifier = Modifier.height(16.dp))

@@ -28,7 +28,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.example.femalepoint.presenation.screens.AddUserDataScreen
+import com.example.female.AddUserDataScreen
 import com.example.femalepoint.presenation.screens.AllProductScreen
 import com.example.femalepoint.presenation.screens.AllReviewScreen
 import com.example.femalepoint.presenation.screens.CartScreen

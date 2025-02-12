@@ -1,6 +1,7 @@
 package com.example.femalepoint.presenation.screens
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,6 +37,9 @@ import coil3.compose.AsyncImage
 import com.example.femalepoint.navigation.ORDERHISTORYDETAILS
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
+import java.util.Calendar
+
+
 
 @Composable
 fun ExpenseTrackingScreen(viewModel: MyViewModel = hiltViewModel(), navController: NavController) {
@@ -46,26 +50,68 @@ fun ExpenseTrackingScreen(viewModel: MyViewModel = hiltViewModel(), navControlle
 
     // Collecting state
     val listOfData by viewModel.getAllOrderState.collectAsState()
+    val totalExpenseLifeTime = listOfData.data.sumOf { it.productFinalPrice.toInt() * it.noOfproducts.toInt() }
 
-    if (listOfData.isloading) {
-        LoadingBar()
-    } else if (listOfData.error.isNotEmpty()) {
-        ErrorScreen()
-    } else {
-        // Calculate the total expense before composition
-        val totalExpense = listOfData.data.sumOf { it.productFinalPrice.toInt() * it.noOfproducts.toInt() }
+    when {
+        listOfData.isloading -> {
+            LoadingBar()
+        }
+        listOfData.error.isNotEmpty() -> {
+            ErrorScreen()
+        }
+        else -> {
+            // Get current month and year
+            val calendar = Calendar.getInstance()
+            val currentMonth = calendar.get(Calendar.MONTH)
+            val currentYear = calendar.get(Calendar.YEAR)
 
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Column {
-                Text("Total Expense: $totalExpense")
-                Spacer(modifier = Modifier.height(16.dp))
+            // Filter orders that belong to the current month
+            val filteredOrders = listOfData.data.filter { order ->
+                val orderCalendar = Calendar.getInstance().apply { timeInMillis = order.date }
+                val orderMonth = orderCalendar.get(Calendar.MONTH)
+                val orderYear = orderCalendar.get(Calendar.YEAR)
+                orderMonth == currentMonth && orderYear == currentYear
+            }
 
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
+            // Calculate total expense for the current month
+            val totalExpense = filteredOrders.sumOf { it.productFinalPrice.toInt() * it.noOfproducts.toInt() }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                // Expense Summary
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
                 ) {
-                    items(listOfData.data) { order ->
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = "Total Expense: Rs $totalExpenseLifeTime",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "Current Month: Rs $totalExpense",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+
+                // List of Expenses
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(filteredOrders) { order ->
                         EachExpenseItemLook(
                             productImage = order.productImage,
                             productCategory = order.productCategory,
@@ -77,11 +123,6 @@ fun ExpenseTrackingScreen(viewModel: MyViewModel = hiltViewModel(), navControlle
                             productId = order.productID,
                             navController = navController
                         )
-                    }
-                    item {
-                        Box(modifier = Modifier.height(16.dp)) {
-                            Text("hello")
-                        }
                     }
                 }
             }

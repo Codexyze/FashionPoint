@@ -13,5 +13,7 @@ data class OrderDetails(
     val productImage:String ="",
     val productinitialprice:String ="",
     val productFinalPrice:String ="",
-    val noOfproducts:Int=0
+    val noOfproducts:Int=0,
+    //added date
+    val date:Long=0L
 )

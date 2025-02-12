@@ -287,7 +287,8 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
                                       productImage = productimage,
                                       productinitialprice = productinitailprice,
                                     productFinalPrice = productfinalprice,
-                                      noOfproducts = noOfUnits.value.toInt()
+                                      noOfproducts = noOfUnits.value.toInt(),
+                                      date=System.currentTimeMillis()
 
                                   )
 

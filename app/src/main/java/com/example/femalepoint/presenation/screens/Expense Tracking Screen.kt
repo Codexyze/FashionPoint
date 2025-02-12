@@ -60,21 +60,35 @@ fun ExpenseTrackingScreen(viewModel: MyViewModel = hiltViewModel(), navControlle
             ErrorScreen()
         }
         else -> {
-            // Get current month and year
+
+            // Get an instance of the Calendar class representing the current date and time
             val calendar = Calendar.getInstance()
+
+// Extract the current month from the calendar (Months are indexed from 0, so January = 0, February = 1, etc.)
             val currentMonth = calendar.get(Calendar.MONTH)
+
+// Extract the current year from the calendar
             val currentYear = calendar.get(Calendar.YEAR)
 
-            // Filter orders that belong to the current month
+// Filter the list to include only the orders that belong to the current month and year
             val filteredOrders = listOfData.data.filter { order ->
+
+                // Create a new Calendar instance and set its time to the order's timestamp (milliseconds)
                 val orderCalendar = Calendar.getInstance().apply { timeInMillis = order.date }
+
+                // Extract the month of the order from the converted timestamp
                 val orderMonth = orderCalendar.get(Calendar.MONTH)
+
+                // Extract the year of the order from the converted timestamp
                 val orderYear = orderCalendar.get(Calendar.YEAR)
+
+                // Check if the order's month and year match the current month and year
                 orderMonth == currentMonth && orderYear == currentYear
             }
 
-            // Calculate total expense for the current month
+// Calculate the total expense for the current month by summing up the (price * quantity) of each order
             val totalExpense = filteredOrders.sumOf { it.productFinalPrice.toInt() * it.noOfproducts.toInt() }
+
 
             Column(
                 modifier = Modifier

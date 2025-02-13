@@ -15,4 +15,5 @@ object Constants {
     const val CHANNEL_ID="channel_id_1"
     const val CHANNEL_NAME="PaymentSucessful"
     const val USERDEATILSFORORDER="UserDetailsForOrder"
+    const val PROFILE_PICTURE="ProfilePhotos"
 }

@@ -1,6 +1,8 @@
 package com.example.femalepoint.presenation.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.example.femalepoint.common.ResultState
 import com.example.femalepoint.data.AddToCartState
@@ -14,6 +16,7 @@ import com.example.femalepoint.data.OrderDetails
 import com.example.femalepoint.data.OrderProductState
 import com.example.femalepoint.data.OrderState
 import com.example.femalepoint.data.Product
+import com.example.femalepoint.data.ProfileUpdateState
 import com.example.femalepoint.data.ReelsState
 import com.example.femalepoint.data.ReviewDeatailsUploadState
 import com.example.femalepoint.data.ReviewDetails
@@ -79,6 +82,8 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
     val userDetailsForOrderState= _userDetailsForOrderState.asStateFlow()
     private val _getUserDataForStoring=MutableStateFlow(UserDataStoreState())
     val getUserDataForStoring=_getUserDataForStoring.asStateFlow()
+    private  val _profilePicUpdateState= MutableStateFlow(ProfileUpdateState())
+    val profilePicUpdateState=_profilePicUpdateState.asStateFlow()
 
     fun getAllCategories() {
         viewModelScope.launch {
@@ -485,6 +490,25 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
         }
 
 
+
+    }
+    fun updateProfileImage(imageUrl: String) {
+        viewModelScope.launch {
+            repository.updateProfilePicture(uri = Uri.parse(imageUrl)).collectLatest {
+                when(it){
+                    is ResultState.Loading->{
+                       _profilePicUpdateState.value= ProfileUpdateState(isloading = true)
+                    }
+                    is ResultState.Error->{
+                        _profilePicUpdateState.value= ProfileUpdateState(error = it.message.toString(), isloading = false)
+                    }
+                    is ResultState.Sucess->{
+                        _profilePicUpdateState.value= ProfileUpdateState(isloading = false, data = it.data)
+                    }
+                }
+
+            }
+        }
 
     }
 

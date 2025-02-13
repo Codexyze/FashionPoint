@@ -37,6 +37,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.femalepoint.data.Userdata
@@ -46,6 +47,8 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavController) {
   val userDataStoreforOrderState=viewModel.userDetailsForOrderState.collectAsState()
+    //Todo Update Profile Screen
+    val profilePicupdateState=viewModel.profilePicUpdateState.collectAsState()
     val name = remember { mutableStateOf("") }
     val id = remember { mutableStateOf("") }
     val email = remember { mutableStateOf("") }
@@ -61,10 +64,10 @@ fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavCont
         id.value=FirebaseAuth.getInstance().currentUser?.uid.toString()
     }
     //name, email,phonenumber,phonenumber2,address,image,pincode,state,age,nearbyPoints
-    if (userDataStoreforOrderState.value.isloading) {
+    if (userDataStoreforOrderState.value.isloading&&profilePicupdateState.value.isloading) {
         LoadingIndicator()
     }
-    else if(userDataStoreforOrderState.value.error.isNotEmpty()) {
+    else if(userDataStoreforOrderState.value.error.isNotEmpty()&&profilePicupdateState.value.error.isNotEmpty()){
           ErrorScreen()
 
     }
@@ -74,6 +77,8 @@ fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavCont
             contract =  ActivityResultContracts.PickVisualMedia(),
             onResult = {
                 imageurl.value= it.toString()
+                viewModel.updateProfileImage(it.toString())
+                //uploade
             }
         )
         Column(

@@ -92,3 +92,9 @@ data class UserDataStoreState(
     val data:Userdata?=null,
     val isloading: Boolean=false
 )
+
+data class ProfileUpdateState(
+    val error: String="",
+    val data: String="",
+    val isloading: Boolean=false
+)

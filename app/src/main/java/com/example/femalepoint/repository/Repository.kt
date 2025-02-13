@@ -1,5 +1,6 @@
 package com.example.femalepoint.repository
 
+import android.net.Uri
 import android.util.Log
 
 import com.example.femalepoint.common.ResultState
@@ -7,6 +8,7 @@ import com.example.femalepoint.constants.Constants
 import com.example.femalepoint.data.Category
 import com.example.femalepoint.data.OrderDetails
 import com.example.femalepoint.data.Product
+import com.example.femalepoint.data.ProfilePicture
 import com.example.femalepoint.data.Reels
 import com.example.femalepoint.data.ReviewDetails
 import com.example.femalepoint.data.Userdata
@@ -34,6 +36,7 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
     private val time = System.currentTimeMillis()
     private val storage=FirebaseStorage.getInstance()
     private val storageRefrence=storage.reference.child("videos/")
+    private val profilestorageRefrence=storage.reference.child("profile/$currentuser.jpg")
     private val dataForUserDataStore=firebaseinstance.collection(Constants.USERDEATILSFORORDER).document(currentuser).get()
 
     suspend fun getcategory(): Flow<ResultState<List<Category>>> = callbackFlow {
@@ -375,6 +378,40 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
         awaitClose {
             close()
         }
+    }
+    suspend fun updateProfilePicture(uri: Uri):Flow<ResultState<String>> = callbackFlow {
+        trySend(ResultState.Loading)
+        profilestorageRefrence.putFile(uri).addOnSuccessListener {download->
+            val data= ProfilePicture(userID = currentuser,imageUri = download.metadata.toString())
+            firebaseinstance.collection(Constants.PROFILE_PICTURE).document().set(data).addOnSuccessListener {
+                trySend(ResultState.Sucess("Profile Picture Updated"))
+            }.addOnFailureListener {
+                trySend(ResultState.Error(it.message.toString()))
+            }
+
+        }.addOnFailureListener {
+
+            trySend(ResultState.Error(it.message.toString()))
+        }
+        awaitClose {
+            close()
+        }
+
+    }
+    suspend fun getUserProfilePic():Flow<ResultState<ProfilePicture>> = callbackFlow {
+        trySend(ResultState.Loading)
+        firebaseinstance.collection(Constants.PROFILE_PICTURE).whereEqualTo("userID",currentuser).get().addOnSuccessListener {
+            val data = it.documents.mapNotNull {
+                it.toObject(ProfilePicture::class.java)
+            }
+            trySend(ResultState.Sucess(data[0]))
+        }.addOnFailureListener {
+            trySend(ResultState.Error(it.message.toString()))
+        }
+        awaitClose {
+            close()
+        }
+
     }
 
 }

@@ -12,6 +12,7 @@ import com.example.femalepoint.data.AuthState
 import com.example.femalepoint.data.GetAllCartItemsState
 import com.example.femalepoint.data.GetAllProductsWithoutLimitState
 import com.example.femalepoint.data.GetMatchingState
+import com.example.femalepoint.data.GetProfilePictureAfterUpdateState
 import com.example.femalepoint.data.OrderDetails
 import com.example.femalepoint.data.OrderProductState
 import com.example.femalepoint.data.OrderState
@@ -84,6 +85,8 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
     val getUserDataForStoring=_getUserDataForStoring.asStateFlow()
     private  val _profilePicUpdateState= MutableStateFlow(ProfileUpdateState())
     val profilePicUpdateState=_profilePicUpdateState.asStateFlow()
+    private val _getProfileAfterUpdate =MutableStateFlow(GetProfilePictureAfterUpdateState())
+    val getProfileAfterUpdate=_getProfileAfterUpdate.asStateFlow()
 
     fun getAllCategories() {
         viewModelScope.launch {
@@ -508,6 +511,26 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                 }
 
             }
+        }
+
+    }
+    fun getProfilePictureAfterUpdate(){
+        viewModelScope.launch {
+            repository.getUserProfilePicAfterUpload().collectLatest {
+                when(it){
+                    is ResultState.Error->{
+                        _getProfileAfterUpdate.value=GetProfilePictureAfterUpdateState(isloading = false, error = it.message.toString())
+                    }
+                    is ResultState.Loading->{
+                        _getProfileAfterUpdate.value=GetProfilePictureAfterUpdateState(isloading = true)
+                    }
+                    is ResultState.Sucess-> {
+                        _getProfileAfterUpdate.value =
+                            GetProfilePictureAfterUpdateState(isloading = false, data = it.data)
+                    }
+                }
+            }
+
         }
 
     }

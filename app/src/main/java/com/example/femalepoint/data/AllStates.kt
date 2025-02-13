@@ -98,3 +98,10 @@ data class ProfileUpdateState(
     val data: String="",
     val isloading: Boolean=false
 )
+
+data class GetProfilePictureAfterUpdateState(
+    val error: String="",
+    val data: ProfilePicture?=null,
+
+    val isloading: Boolean=false
+)

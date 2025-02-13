@@ -1,5 +1,6 @@
 package com.example.femalepoint.presenation.screens
 
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -36,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -47,6 +49,7 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavController) {
   val userDataStoreforOrderState=viewModel.userDetailsForOrderState.collectAsState()
+
     //Todo Update Profile Screen
     val profilePicupdateState=viewModel.profilePicUpdateState.collectAsState()
     val name = remember { mutableStateOf("") }
@@ -62,16 +65,24 @@ fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavCont
     val nearbyPoints = remember { mutableStateOf("") }
     LaunchedEffect (Unit){
         id.value=FirebaseAuth.getInstance().currentUser?.uid.toString()
+        viewModel.getProfilePictureAfterUpdate()
+
+
     }
     //name, email,phonenumber,phonenumber2,address,image,pincode,state,age,nearbyPoints
-    if (userDataStoreforOrderState.value.isloading&&profilePicupdateState.value.isloading) {
+    if (userDataStoreforOrderState.value.isloading&&
+        profilePicupdateState.value.isloading
+        ){
         LoadingIndicator()
     }
-    else if(userDataStoreforOrderState.value.error.isNotEmpty()&&profilePicupdateState.value.error.isNotEmpty()){
+    else if(userDataStoreforOrderState.value.error.isNotEmpty()&&
+        profilePicupdateState.value.error.isNotEmpty() ){
           ErrorScreen()
 
     }
     else {
+        val getProfilePictureAfterUpdateState=viewModel.getProfileAfterUpdate.collectAsState()
+        Log.d("PROFILEPICTURE",getProfilePictureAfterUpdateState.value.data.toString())
         val imageurl= remember { mutableStateOf("") }
         val media= rememberLauncherForActivityResult(
             contract =  ActivityResultContracts.PickVisualMedia(),
@@ -108,11 +119,21 @@ fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavCont
                             }, // Handle image picker on click
                         contentAlignment = Alignment.Center
                     ) {
-                        if (imageurl.value != null) {
-                           AsyncImage(model = imageurl.value, contentDescription = "Profile Image",
-                               modifier = Modifier.fillMaxSize(),
-                               contentScale = ContentScale.Crop
-                               )
+
+                        if (imageurl.value.isNotEmpty()) {
+                            AsyncImage(
+                                model = imageurl.value,
+                                contentDescription = "Profile Image",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else if (!getProfilePictureAfterUpdateState.value.data?.imageUri.isNullOrEmpty()) {
+                            AsyncImage(
+                                model = getProfilePictureAfterUpdateState.value.data?.imageUri,
+                                contentDescription = "Profile Image",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
                         } else {
                             Icon(
                                 imageVector = Icons.Default.Person,
@@ -121,6 +142,7 @@ fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavCont
                                 modifier = Modifier.size(60.dp)
                             )
                         }
+
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))

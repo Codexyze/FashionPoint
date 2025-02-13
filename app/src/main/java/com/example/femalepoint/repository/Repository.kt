@@ -382,9 +382,18 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
     suspend fun updateProfilePicture(uri: Uri):Flow<ResultState<String>> = callbackFlow {
         trySend(ResultState.Loading)
         profilestorageRefrence.putFile(uri).addOnSuccessListener {download->
-            val data= ProfilePicture(userID = currentuser,imageUri = download.metadata.toString())
-            firebaseinstance.collection(Constants.PROFILE_PICTURE).document(currentuser).set(data).addOnSuccessListener {
-                trySend(ResultState.Sucess("Profile Picture Updated"))
+
+            download.storage.downloadUrl.addOnSuccessListener { uri ->
+                val data = ProfilePicture(userID = currentuser, imageUri = uri.toString())
+                firebaseinstance.collection(Constants.PROFILE_PICTURE)
+                    .document(currentuser)
+                    .set(data)
+                    .addOnSuccessListener {
+                        trySend(ResultState.Sucess("Profile Picture Updated"))
+                    }
+                    .addOnFailureListener {
+                        trySend(ResultState.Error(it.message.toString()))
+                    }
             }.addOnFailureListener {
                 trySend(ResultState.Error(it.message.toString()))
             }
@@ -399,17 +408,23 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
 
     }
     suspend fun getUserProfilePicAfterUpload():Flow<ResultState<ProfilePicture>> = callbackFlow {
-        trySend(ResultState.Loading)
-        firebaseinstance.collection(Constants.PROFILE_PICTURE).document(currentuser).get().addOnSuccessListener {
-               val data= it.toObject(ProfilePicture::class.java)
 
-            trySend(ResultState.Sucess(data!!))
-        }.addOnFailureListener {
-            trySend(ResultState.Error(it.message.toString()))
-        }
+        firebaseinstance.collection(Constants.PROFILE_PICTURE).document(currentuser).get()
+            .addOnSuccessListener { document ->
+                val data = document.toObject(ProfilePicture::class.java)
+                if (data != null) {
+                    trySend(ResultState.Sucess(data))
+                } else {
+                    trySend(ResultState.Error("Profile picture data is null"))
+                }
+            }
+            .addOnFailureListener {
+                trySend(ResultState.Error(it.message.toString()))
+            }
         awaitClose {
             close()
         }
+
 
     }
 

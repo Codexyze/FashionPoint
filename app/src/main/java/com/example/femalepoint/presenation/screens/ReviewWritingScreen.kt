@@ -17,6 +17,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,10 +44,17 @@ fun ReviewWritingAndUploadingScreen(
     category: String = "",
     productname: String = ""
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.getProfilePictureAfterUpdate()
+
+    }
     val context = LocalContext.current
     val review = remember { mutableStateOf("") }
     val userName = remember { mutableStateOf("") }
     val reviewUploadState = viewModel.reviewDetailsUpload.collectAsState()
+    val profilePictureState =viewModel.getProfileAfterUpdate.collectAsState()
+    //implementation of profile picture
+
 
     Column(
         modifier = Modifier

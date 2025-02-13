@@ -2,9 +2,9 @@ package com.example.femalepoint.presenation.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.example.femalepoint.common.ResultState
+import com.example.femalepoint.common.ResultState.Error
 import com.example.femalepoint.data.AddToCartState
 import com.example.femalepoint.data.AddUserState
 import com.example.femalepoint.data.AllReviewDetailsState
@@ -13,6 +13,7 @@ import com.example.femalepoint.data.GetAllCartItemsState
 import com.example.femalepoint.data.GetAllProductsWithoutLimitState
 import com.example.femalepoint.data.GetMatchingState
 import com.example.femalepoint.data.GetProfilePictureAfterUpdateState
+import com.example.femalepoint.data.GetProfilePictureByUserIDState
 import com.example.femalepoint.data.OrderDetails
 import com.example.femalepoint.data.OrderProductState
 import com.example.femalepoint.data.OrderState
@@ -87,12 +88,14 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
     val profilePicUpdateState=_profilePicUpdateState.asStateFlow()
     private val _getProfileAfterUpdate =MutableStateFlow(GetProfilePictureAfterUpdateState())
     val getProfileAfterUpdate=_getProfileAfterUpdate.asStateFlow()
+    private val _getProfilePictureByUserIDState= MutableStateFlow(GetProfilePictureByUserIDState())
+    val getProfilePictureByUserIDState=_getProfilePictureByUserIDState.asStateFlow()
 
     fun getAllCategories() {
         viewModelScope.launch {
             repository.getcategory().collectLatest { it ->
                 when (it) {
-                    is ResultState.Error -> {
+                    is Error -> {
                         _getAllCategoryState.value = getCategorgy(error = it.message.toString())
                     }
 
@@ -118,7 +121,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
 
                     }
 
-                    is ResultState.Error -> {
+                    is Error -> {
                         _createuserstate.value = AuthState(error = it.message.toString())
                     }
 
@@ -141,7 +144,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                         _loginstate.value = AuthState(isloading = true)
                     }
 
-                    is ResultState.Error -> {
+                    is Error -> {
                         _loginstate.value = AuthState(error = it.message.toString())
                     }
 
@@ -163,7 +166,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                         _getproducts.value = getProduct(data = it.data)
                     }
 
-                    is ResultState.Error -> {
+                    is Error -> {
                         _getproducts.value = getProduct(error = it.message.toString())
                     }
 
@@ -201,7 +204,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                  is ResultState.Sucess->{
                      _addUserLocationState.value=userState(data = it.data,isloading = false)
                  }
-                 is ResultState.Error->{
+                 is Error->{
                      _addUserLocationState.value=userState(error = it.message.toString(),isloading = false)
                  }
              }
@@ -222,7 +225,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                   is ResultState.Sucess->{
                       _addUserState.value= AddUserState(data = it.data,isloading = false)
                   }
-                       is ResultState.Error->{
+                       is Error->{
                         _addUserState.value= AddUserState(error = it.message.toString(),isloading = false)
                     }
 
@@ -245,7 +248,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                     is ResultState.Sucess->{
                         _orderproductstate.value= OrderState(error = "",data = it.data,isloading = false)
                     }
-                    is ResultState.Error->{
+                    is Error->{
                        _orderproductstate.value= OrderState(error = it.message.toString(),isloading = false)
                     }
                 }
@@ -265,7 +268,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                       _getAllOrdersState.value=
                           OrderProductState(error = "",data = it.data,isloading = false)
                     }
-                    is ResultState.Error->{
+                    is Error->{
                       _getAllOrdersState.value=OrderProductState(error = it.message.toString(),isloading = false)
                     }
                 }
@@ -283,7 +286,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                   is ResultState.Sucess->{
                       _getProductBySpecificID.value = getProductByIdState(error = "", data = it.data, isloading = false)
                   }
-                  is ResultState.Error->{
+                  is Error->{
                       _getProductBySpecificID.value = getProductByIdState(error = it.message.toString(), isloading = false)
                   }
               }
@@ -301,7 +304,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                     is ResultState.Sucess->{
                         _updateStockState.value=UpdateStockState(error = "", data = it.data , isloading = false)
                     }
-                    is ResultState.Error->{
+                    is Error->{
                         _updateStockState.value=UpdateStockState(error = it.message, isloading = false)
                     }
                 }
@@ -319,7 +322,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                 when(it){
                     is ResultState.Loading->_matchingProductState.value= GetMatchingState(isloading = true)
                     is ResultState.Sucess->_matchingProductState.value=GetMatchingState(data = it.data)
-                    is ResultState.Error->_matchingProductState.value=GetMatchingState(error = it.message.toString())
+                    is Error->_matchingProductState.value=GetMatchingState(error = it.message.toString())
 
                 }
             }
@@ -336,7 +339,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                    is  ResultState.Sucess->{
                         _getAllProductsWithoutLimitState.value=GetAllProductsWithoutLimitState(error = "",data = it.data,isloading = false)
                     }
-                   is  ResultState.Error->{
+                   is  Error->{
                         _getAllProductsWithoutLimitState.value=GetAllProductsWithoutLimitState(error = it.message.toString(),isloading = false)
                     }
                 }
@@ -347,7 +350,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
         viewModelScope.launch {
           repository.addToCart(product = product).collectLatest {
               when(it){
-                  is ResultState.Error->{
+                  is Error->{
                       _addToCart.value= AddToCartState(error = it.message, isloading = false)
                   }
                   is ResultState.Sucess->{
@@ -371,7 +374,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                     is ResultState.Sucess->{
                         _allCartItmesList.value= GetAllCartItemsState(data = it.data,isloading = false)
                     }
-                    is ResultState.Error->{
+                    is Error->{
                         _allCartItmesList.value= GetAllCartItemsState(error = it.message.toString(),isloading = false)
                     }
                 }
@@ -390,7 +393,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                         is ResultState.Sucess->{
                             _reviewDetailsUpload.value= ReviewDeatailsUploadState(data = it.data,isloading = false)
                         }
-                        is ResultState.Error->{
+                        is Error->{
                             _reviewDetailsUpload.value= ReviewDeatailsUploadState(error = it.message.toString(),isloading = false)
                         }
                     }
@@ -411,7 +414,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                     is ResultState.Sucess->{
                        _allRevivewDeils.value= AllReviewDetailsState(data = it.data,isloading = false)
                     }
-                    is ResultState.Error->{
+                    is Error->{
                         _allRevivewDeils.value= AllReviewDetailsState(error = it.message.toString(),isloading = false)
                     }
                 }
@@ -428,7 +431,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                     is ResultState.Sucess->{
                         _searchProductState.value= SearchProductState(data = it.data,isloading = false)
                     }
-                    is ResultState.Error->{
+                    is Error->{
                         _searchProductState.value= SearchProductState(error = it.message.toString(),isloading = false)
                     }
                 }
@@ -445,7 +448,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                     is ResultState.Sucess->{
                         _getAllReelVideosFromStorage.value=ReelsState(data = it.data,isloading = false)
                     }
-                    is ResultState.Error->{
+                    is Error->{
                         _getAllReelVideosFromStorage.value=ReelsState(error = it.message.toString(),isloading = false)
                     }
                 }
@@ -460,7 +463,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                         _userDetailsForOrderState.value=StoreUserDataForOrderState(isloading = true)
 
                     }
-                    is ResultState.Error->{
+                    is Error->{
                         _userDetailsForOrderState.value=StoreUserDataForOrderState(error = it.message.toString(), isloading = false)
                     }
                     is ResultState.Sucess->{
@@ -482,7 +485,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                     is ResultState.Loading->{
                         _getUserDataForStoring.value=UserDataStoreState(isloading = true)
                     }
-                    is ResultState.Error->{
+                    is Error->{
                         _getUserDataForStoring.value=UserDataStoreState(error = it.message.toString(), isloading = false)
                     }
                     is ResultState.Sucess->{
@@ -502,7 +505,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                     is ResultState.Loading->{
                        _profilePicUpdateState.value= ProfileUpdateState(isloading = true)
                     }
-                    is ResultState.Error->{
+                    is Error->{
                         _profilePicUpdateState.value= ProfileUpdateState(error = it.message.toString(), isloading = false)
                     }
                     is ResultState.Sucess->{
@@ -518,7 +521,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
         viewModelScope.launch {
             repository.getUserProfilePicAfterUpload().collectLatest {
                 when(it){
-                    is ResultState.Error->{
+                    is Error->{
                         _getProfileAfterUpdate.value=GetProfilePictureAfterUpdateState(isloading = false, error = it.message.toString())
                     }
                     is ResultState.Loading->{
@@ -531,6 +534,25 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                 }
             }
 
+        }
+
+    }
+    fun getProfilePictureByUserID(userID:String){
+        viewModelScope.launch {
+            repository.getProfilePictureByUserId(userID = userID).collectLatest {
+               when(it){
+                   is ResultState.Loading->{
+                      _getProfilePictureByUserIDState.value=GetProfilePictureByUserIDState(isloading = true)
+                   }
+                   is Error->{
+                      _getProfilePictureByUserIDState.value=GetProfilePictureByUserIDState(isloading = false, error = it.message.toString())
+                   }
+                   is ResultState.Sucess->{
+                      _getProfilePictureByUserIDState.value=GetProfilePictureByUserIDState(isloading = false, data = it.data)
+                   }
+               }
+
+            }
         }
 
     }

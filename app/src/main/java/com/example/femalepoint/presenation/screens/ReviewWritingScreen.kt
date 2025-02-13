@@ -34,6 +34,7 @@ import com.example.femalepoint.FiraSansFamily
 import com.example.femalepoint.data.ReviewDetails
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.shashank.sony.fancytoastlib.FancyToast
 
 @Composable
@@ -44,16 +45,13 @@ fun ReviewWritingAndUploadingScreen(
     category: String = "",
     productname: String = ""
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.getProfilePictureAfterUpdate()
 
-    }
     val context = LocalContext.current
     val review = remember { mutableStateOf("") }
     val userName = remember { mutableStateOf("") }
     val reviewUploadState = viewModel.reviewDetailsUpload.collectAsState()
-    val profilePictureState =viewModel.getProfileAfterUpdate.collectAsState()
-    //implementation of profile picture
+    val userID=FirebaseAuth.getInstance().currentUser?.uid.toString()
+
 
 
     Column(
@@ -103,13 +101,14 @@ fun ReviewWritingAndUploadingScreen(
                         rating = 0,
                         category = category,
                         productName = productname,
-                        userName = userName.value
+                        userName = userName.value,
+                        userID = userID
                     )
 
                     viewModel.reviewDeatilsUpload(
                         productID = productID,
                         imageUrl = imageUrl,
-                        reviewDetails = reviewObject
+                        reviewDetails = reviewObject,
                     )
 
                     FancyToast.makeText(

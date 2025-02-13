@@ -7,5 +7,6 @@ data class ReviewDetails(
     val rating:Int=0,
     val category:String="",
     val productName:String=""
-    ,val userName:String=""
+    ,val userName:String="",
+    val userID:String=""
 )

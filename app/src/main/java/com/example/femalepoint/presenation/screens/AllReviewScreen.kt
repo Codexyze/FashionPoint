@@ -1,14 +1,19 @@
 package com.example.femalepoint.presenation.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults.cardElevation
@@ -19,8 +24,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil3.compose.AsyncImage
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 
@@ -28,7 +37,9 @@ import com.example.femalepoint.presenation.viewmodel.MyViewModel
 fun AllReviewScreen(viewModel: MyViewModel = hiltViewModel(),productID:String) {
     LaunchedEffect(Unit) {
         viewModel.allrevivewDetails(productID = productID)
+       // viewModel.getProfilePictureAfterUpdate()
     }
+
     val allReviewDetailsState = viewModel.allReviewDetails.collectAsState()
     if (allReviewDetailsState.value.isloading) {
         LoadingBar()
@@ -54,7 +65,8 @@ fun AllReviewScreen(viewModel: MyViewModel = hiltViewModel(),productID:String) {
                     if (review.review.isNotEmpty()) {
                         ReviewCard(
                             userName = review.userName,
-                            reviewText = review.review
+                            reviewText = review.review,
+                            userID = review.userID
                         )
                     } else {
                         NoReviewCard()
@@ -66,32 +78,61 @@ fun AllReviewScreen(viewModel: MyViewModel = hiltViewModel(),productID:String) {
     }
 }
 @Composable
-fun ReviewCard(userName: String, reviewText: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth() // Card takes full width of the parent
-            .padding(8.dp), // Padding around the card
-        elevation = cardElevation(8.dp), // Shadow effect for the card
-        shape = RoundedCornerShape(8.dp) // Rounded corners
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp) // Padding inside the card
-        ) {
-            // Display the username
-            Text(
-                text = userName,
-                style = MaterialTheme.typography.titleLarge,
+fun ReviewCard(userName: String, reviewText: String,userID:String,viewmodel:MyViewModel= hiltViewModel()) {
+    LaunchedEffect(Unit) {
+        viewmodel.getProfilePictureByUserID(userID = userID)
 
-            )
-            Spacer(modifier = Modifier.height(8.dp)) // Space between username and review
-            // Display the review
-            Text(
-                text = reviewText,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface // Adjust text color to match the theme
-            )
+    }
+    val getProfilePictureByUserIDState=viewmodel.getProfilePictureByUserIDState.collectAsState()
+
+    if(getProfilePictureByUserIDState.value.isloading){
+        LoadingBar()
+    }else if(getProfilePictureByUserIDState.value.error.isNotEmpty()){
+        ErrorScreen()
+
+    }else {
+       // getProfilePictureByUserIDState.value.data?.imageUri |this brings image url
+        
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            elevation = cardElevation(8.dp),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically // Align items in the center vertically
+                ) {
+                    AsyncImage(
+                        model = getProfilePictureByUserIDState.value.data?.imageUri,
+                        contentDescription = "Profile Picture",
+                        modifier = Modifier
+                            .size(40.dp) // Small size but visible
+                            .clip(CircleShape) // Circular shape
+                            .background(Color.Gray), // Placeholder background
+                        contentScale = ContentScale.Crop // Crop to fit
+                    )
+                    Spacer(modifier = Modifier.width(8.dp)) // Space between image and name
+
+                    Text(
+                        text = userName,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = reviewText,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
         }
+
     }
 }
 @Composable

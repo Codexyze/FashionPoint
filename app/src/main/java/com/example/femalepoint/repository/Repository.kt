@@ -16,6 +16,7 @@ import com.example.femalepoint.data.UsersDetails
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.storage
 import kotlinx.coroutines.channels.awaitClose
@@ -425,8 +426,21 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
             close()
         }
 
+    }
+    suspend fun  getProfilePictureByUserId(userID:String):Flow<ResultState<ProfilePicture>> = callbackFlow {
+        firebaseinstance.collection(Constants.PROFILE_PICTURE).document(userID).get().addOnSuccessListener {
+            val data=it.toObject(ProfilePicture::class.java)
+            if (data !=null){
+                trySend(ResultState.Sucess(data))
+            }
+        }.addOnFailureListener {
+
+            trySend(ResultState.Error(it.message.toString()))
+        }
+        awaitClose {
+            close()
+        }
 
     }
-
 }
 

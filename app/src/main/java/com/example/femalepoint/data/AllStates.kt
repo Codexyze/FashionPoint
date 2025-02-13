@@ -102,6 +102,11 @@ data class ProfileUpdateState(
 data class GetProfilePictureAfterUpdateState(
     val error: String="",
     val data: ProfilePicture?=null,
+    val isloading: Boolean=false
+)
 
+data class GetProfilePictureByUserIDState(
+    val error: String="",
+    val data: ProfilePicture?=null,
     val isloading: Boolean=false
 )

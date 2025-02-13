@@ -1,6 +1,7 @@
 package com.example.femalepoint.presenation.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -92,7 +93,7 @@ fun ReviewCard(userName: String, reviewText: String,userID:String,viewmodel:MyVi
 
     }else {
        // getProfilePictureByUserIDState.value.data?.imageUri |this brings image url
-        
+
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -105,6 +106,12 @@ fun ReviewCard(userName: String, reviewText: String,userID:String,viewmodel:MyVi
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically // Align items in the center vertically
+                    , modifier = Modifier.clickable {
+                        //show profile picture with all users detail here
+
+                      //  TODO()
+
+                    }
                 ) {
                     AsyncImage(
                         model = getProfilePictureByUserIDState.value.data?.imageUri,

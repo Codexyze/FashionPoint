@@ -442,5 +442,16 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
         }
 
     }
+
+    suspend fun  getUserDetailsByUserId(userID: String):Flow<ResultState<Userdata>> =callbackFlow {
+        trySend(ResultState.Loading)
+        firebaseinstance.collection(Constants.USERDEATILSFORORDER).document(userID).get().addOnSuccessListener {
+            val data =it.toObject(Userdata::class.java)
+            trySend(ResultState.Sucess(data!!))
+        }.addOnFailureListener {
+            trySend(ResultState.Error(it.message.toString()))
+        }
+
+    }
 }
 

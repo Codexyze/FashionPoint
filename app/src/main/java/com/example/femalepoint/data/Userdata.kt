@@ -12,3 +12,5 @@ data class Userdata(
     val age: String?=null,
     val nearbyPoints: String?=null
 )
+
+

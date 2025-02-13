@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
@@ -45,6 +46,7 @@ import coil3.compose.AsyncImage
 import com.example.femalepoint.data.Userdata
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.shashank.sony.fancytoastlib.FancyToast
 
 @Composable
 fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavController) {
@@ -63,6 +65,7 @@ fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavCont
     val state = remember { mutableStateOf("") }
     val age = remember { mutableStateOf("") }
     val nearbyPoints = remember { mutableStateOf("") }
+    val context= LocalContext.current
     LaunchedEffect (Unit){
         id.value=FirebaseAuth.getInstance().currentUser?.uid.toString()
         viewModel.getProfilePictureAfterUpdate()
@@ -220,9 +223,11 @@ fun ProfileScreen(viewModel: MyViewModel= hiltViewModel(),navController: NavCont
                                         nearbyPoints = nearbyPoints.value
                                     )
                                     viewModel.addUserDetailsForOrder(userData = userData)
+                                    FancyToast.makeText(context, "Details Updated Successfully", FancyToast.LENGTH_LONG, FancyToast.SUCCESS, false).show()
 
                                     // viewModel.addUserDetailsForOrder()
                                 } catch (e: Exception) {
+                                    FancyToast.makeText(context, "Details Failed to be Uploaded", FancyToast.LENGTH_LONG, FancyToast.ERROR, false).show()
 
                                 }
                             },

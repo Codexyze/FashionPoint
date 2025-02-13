@@ -110,3 +110,9 @@ data class GetProfilePictureByUserIDState(
     val data: ProfilePicture?=null,
     val isloading: Boolean=false
 )
+
+data class ProfileUserDataState(
+    val error: String="",
+    val data: Userdata?=null,
+    val isloading: Boolean=false
+)

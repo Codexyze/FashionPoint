@@ -30,12 +30,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil3.compose.AsyncImage
+import com.example.femalepoint.navigation.PROFILEOFDETAILSSCREEN
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 
 @Composable
-fun AllReviewScreen(viewModel: MyViewModel = hiltViewModel(),productID:String) {
+fun AllReviewScreen(viewModel: MyViewModel = hiltViewModel(),productID:String,navController: NavController) {
     LaunchedEffect(Unit) {
         viewModel.allrevivewDetails(productID = productID)
        // viewModel.getProfilePictureAfterUpdate()
@@ -67,7 +69,8 @@ fun AllReviewScreen(viewModel: MyViewModel = hiltViewModel(),productID:String) {
                         ReviewCard(
                             userName = review.userName,
                             reviewText = review.review,
-                            userID = review.userID
+                            userID = review.userID,
+                            navController = navController
                         )
                     } else {
                         NoReviewCard()
@@ -79,7 +82,7 @@ fun AllReviewScreen(viewModel: MyViewModel = hiltViewModel(),productID:String) {
     }
 }
 @Composable
-fun ReviewCard(userName: String, reviewText: String,userID:String,viewmodel:MyViewModel= hiltViewModel()) {
+fun ReviewCard(userName: String, reviewText: String,userID:String,viewmodel:MyViewModel= hiltViewModel(),navController: NavController) {
     LaunchedEffect(Unit) {
         viewmodel.getProfilePictureByUserID(userID = userID)
 
@@ -107,9 +110,7 @@ fun ReviewCard(userName: String, reviewText: String,userID:String,viewmodel:MyVi
                 Row(
                     verticalAlignment = Alignment.CenterVertically // Align items in the center vertically
                     , modifier = Modifier.clickable {
-                        //show profile picture with all users detail here
-
-                      //  TODO()
+                      navController.navigate(PROFILEOFDETAILSSCREEN(userID = userID))
 
                     }
                 ) {

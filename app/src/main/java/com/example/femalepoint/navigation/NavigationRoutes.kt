@@ -74,3 +74,6 @@ object  PROFILESCREEN
 
 @Serializable
 object EXPENSETRACKINGSCREEN
+
+@Serializable
+data class  PROFILEOFDETAILSSCREEN(val userID:String)

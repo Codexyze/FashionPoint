@@ -42,6 +42,7 @@ import com.example.femalepoint.presenation.screens.OrderProductScreen
 import com.example.femalepoint.presenation.screens.OrderProductScreenFromCart
 import com.example.femalepoint.presenation.screens.PayMentScreen
 import com.example.femalepoint.presenation.screens.PrivacyPolicyScreen
+import com.example.femalepoint.presenation.screens.ProfileDetailsOfUsers
 import com.example.femalepoint.presenation.screens.ProfileScreen
 import com.example.femalepoint.presenation.screens.ReelsVideoScreen
 import com.example.femalepoint.presenation.screens.ReviewWritingAndUploadingScreen
@@ -139,7 +140,7 @@ LaunchedEffect(auth) {
         }
         composable<ALLREVIVEWSCREEN> {bacstackentry->
             val data:ALLREVIVEWSCREEN=bacstackentry.toRoute()
-            AllReviewScreen(productID = data.productId)
+            AllReviewScreen(productID = data.productId, navController = navController)
         }
         composable<SEARCHSCREEN> {
             SearchScreen(navController = navController)
@@ -172,6 +173,10 @@ LaunchedEffect(auth) {
         }
         composable<EXPENSETRACKINGSCREEN> {
             ExpenseTrackingScreen(navController = navController)
+        }
+        composable<PROFILEOFDETAILSSCREEN> {navBackStackEntry ->
+            val data:PROFILEOFDETAILSSCREEN=navBackStackEntry.toRoute()
+            ProfileDetailsOfUsers(userID = data.userID)
         }
 
     }

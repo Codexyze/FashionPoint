@@ -3,6 +3,7 @@ package com.example.femalepoint.presenation.screens
 import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -74,7 +75,11 @@ fun VideoPlayer(videoUrl: String, isPlaying: Boolean) {
     }
 
     AndroidView(
-        modifier = Modifier.fillMaxSize(), // Fullscreen video
+        modifier = Modifier.fillMaxSize().clickable {
+            //go to product screen
+
+
+        }, // Fullscreen video
         factory = { ctx ->
             PlayerView(ctx).apply {
                 player = exoPlayer

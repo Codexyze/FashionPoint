@@ -2,7 +2,6 @@ package com.example.femalepoint.repository
 
 import android.net.Uri
 import android.util.Log
-
 import com.example.femalepoint.common.ResultState
 import com.example.femalepoint.constants.Constants
 import com.example.femalepoint.data.Category
@@ -209,6 +208,9 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
 
             }.addOnFailureListener {
             trySend(ResultState.Error(it.message.toString()))
+        }
+        awaitClose {
+            close()
         }
     }
 
@@ -451,7 +453,25 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
         }.addOnFailureListener {
             trySend(ResultState.Error(it.message.toString()))
         }
+        awaitClose {
+            close()
+        }
+
+    }
+
+    suspend fun getProductByID(productID:String):Flow<ResultState<Product>> = callbackFlow {
+        trySend(ResultState.Loading)
+        firebaseinstance.collection(Constants.PRODUCT).document(productID).get().addOnSuccessListener {
+            val data =it.toObject(Product::class.java)
+            trySend(ResultState.Sucess(data!!))
+        }.addOnFailureListener {
+            trySend(ResultState.Error(it.message.toString()))
+        }
+        awaitClose {
+            close()
+        }
 
     }
 }
+
 

@@ -116,3 +116,15 @@ data class ProfileUserDataState(
     val data: Userdata?=null,
     val isloading: Boolean=false
 )
+
+data class GetProductByIdStateQ(
+    val error: String="",
+    val data:Product?=null,
+    val isloading: Boolean=false
+)
+
+data class  GetReelsMappedWithProductIDState(
+    val error: String="",
+    val data:List<ReelsWithProductRefrence> = emptyList(),
+    val isloading: Boolean=false
+)

@@ -5,13 +5,19 @@ import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -21,6 +27,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import androidx.navigation.NavHostController
+import com.example.femalepoint.navigation.ORDERSCREEN
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 
@@ -28,35 +35,44 @@ import com.example.femalepoint.presenation.viewmodel.MyViewModel
 @Composable
 fun ReelsVideoScreen(viewModel: MyViewModel = hiltViewModel(), navController: NavHostController) {
     LaunchedEffect(Unit) {
-        viewModel.getAllVideosFromServer()
+        viewModel.getReelsMappedWithProductID()
     }
-//navcontroller for future migration
-    val reels = viewModel.getAllReelVideosFromStorage.collectAsState()
-    Log.d("REELS", "${reels.value.data.toString()}")
 
-    if (reels.value.isloading) {
-        LoadingBar()
-    } else if (reels.value.error.isNotEmpty()) {
-        Text("Error from server side")
-    } else {
-        val videoList = reels.value.data ?: emptyList()
+    val reelsState = viewModel.getReelsMappedWithProductIDState.collectAsState()
+    Log.d("LISTOFREELS", "${reelsState.value.data}")
 
-        val pagerState = rememberPagerState(pageCount = { videoList.size }) // For vertical scrolling
+    when {
+        reelsState.value.isloading -> LoadingBar()
+        reelsState.value.error.isNotEmpty() -> ErrorScreen()
+        else -> {
+            val videoList = reelsState.value.data ?: emptyList()
+            val pagerState = rememberPagerState(pageCount = { videoList.size })
 
-        VerticalPager(
-            state = pagerState,
-            modifier = Modifier.fillMaxSize()
-        ) { page ->
-            val videoUrl = videoList[page].url
-            VideoPlayer(videoUrl, isPlaying = pagerState.currentPage == page)
+            VerticalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize()
+            ) { page ->
+                val videoUrl = videoList[page].videoUrl
+                val productID = videoList[page].productID
+
+                // Pass dynamically updated `isPlaying` state
+                VideoPlayer(
+                    videoUrl = videoUrl,
+                    isPlaying = page == pagerState.currentPage, // Only play the current page
+                    productID = productID,
+                    navController = navController
+                )
+            }
         }
     }
 }
 
 @Composable
-fun VideoPlayer(videoUrl: String, isPlaying: Boolean) {
+fun VideoPlayer(videoUrl: String, isPlaying: Boolean, productID: String
+                ,navController: NavHostController,viewModel: MyViewModel= hiltViewModel()
+) {
+    val getProductByIdState=viewModel.getProductByIDStateState.collectAsState()
     val context = LocalContext.current
-
     val exoPlayer = remember(videoUrl) {
         ExoPlayer.Builder(context).build().apply {
             setMediaItem(MediaItem.fromUri(Uri.parse(videoUrl)))
@@ -66,24 +82,43 @@ fun VideoPlayer(videoUrl: String, isPlaying: Boolean) {
 
     DisposableEffect(Unit) {
         onDispose {
-            exoPlayer.release() // Release when removed
+            exoPlayer.release()
         }
     }
 
     LaunchedEffect(isPlaying) {
-        exoPlayer.playWhenReady = isPlaying // Only play if it's the current item
+        Log.d("VIDEO_PLAYER", "Playing: $isPlaying for $videoUrl")
+        exoPlayer.playWhenReady = isPlaying
     }
 
     AndroidView(
-        modifier = Modifier.fillMaxSize().clickable {
-            //go to product screen
+        modifier = Modifier
+            .fillMaxSize()
+            .clickable {
+                //ORDERSCREEN
+                viewModel.getProductByID(productID = productID)
+               if(getProductByIdState.value.data!=null) {
+                   //produt_id:String,imageUri:String,price:Int,finalprice:Int,name:String,
+                   //             discription:String,category:String,noOfUnits:Int
+                   navController.navigate(
+                       ORDERSCREEN(
+                           produt_id = getProductByIdState.value.data!!.productid,
+                           imageUri = getProductByIdState.value.data!!.imageUri,
+                           price = getProductByIdState.value.data!!.price,
+                           finalprice = getProductByIdState.value.data!!.finalprice,
+                           name = getProductByIdState.value.data!!.name,
+                           discription = getProductByIdState.value.data!!.description,
+                           category = getProductByIdState.value.data!!.category,
+                           noOfUnits = getProductByIdState.value.data!!.noOfUnits
+                       )
+                   )
+               }
 
-
-        }, // Fullscreen video
+            },
         factory = { ctx ->
             PlayerView(ctx).apply {
                 player = exoPlayer
-                useController = false // Hide controls like Instagram reels
+                useController = false
             }
         }
     )

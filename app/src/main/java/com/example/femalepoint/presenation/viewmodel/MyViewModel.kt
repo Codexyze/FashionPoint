@@ -12,8 +12,10 @@ import com.example.femalepoint.data.AuthState
 import com.example.femalepoint.data.GetAllCartItemsState
 import com.example.femalepoint.data.GetAllProductsWithoutLimitState
 import com.example.femalepoint.data.GetMatchingState
+import com.example.femalepoint.data.GetProductByIdStateQ
 import com.example.femalepoint.data.GetProfilePictureAfterUpdateState
 import com.example.femalepoint.data.GetProfilePictureByUserIDState
+import com.example.femalepoint.data.GetReelsMappedWithProductIDState
 import com.example.femalepoint.data.OrderDetails
 import com.example.femalepoint.data.OrderProductState
 import com.example.femalepoint.data.OrderState
@@ -93,6 +95,12 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
     val getProfilePictureByUserIDState=_getProfilePictureByUserIDState.asStateFlow()
     private val  _getUserProfileDeailsDataState=MutableStateFlow(ProfileUserDataState())
     val getUserProfileDeailsDataState=_getUserProfileDeailsDataState.asStateFlow()
+    private val _getProductByIDState= MutableStateFlow(GetProductByIdStateQ())
+    val getProductByIDStateState= _getProductByIDState.asStateFlow()
+    private val _getReelsMappedWithProductIDState = MutableStateFlow(
+        GetReelsMappedWithProductIDState()
+    )
+    val getReelsMappedWithProductIDState=_getReelsMappedWithProductIDState.asStateFlow()
 
     fun getAllCategories() {
         viewModelScope.launch {
@@ -566,7 +574,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                     is ResultState.Loading->{
                         _getUserProfileDeailsDataState.value= ProfileUserDataState(isloading = true)
                     }
-                    is ResultState.Error ->{
+                    is Error ->{
                         _getUserProfileDeailsDataState.value= ProfileUserDataState(isloading = false, error = it.message.toString())
                     }
                     is ResultState.Sucess->{
@@ -578,6 +586,50 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
             }
 
         }
+    }
+
+    fun getProductByID(productID:String){
+        viewModelScope.launch {
+            repository.getProductByID(productID = productID).collectLatest {
+                when(it){
+                    is ResultState.Loading->{
+                        _getProductByIDState.value=GetProductByIdStateQ(isloading = true)
+                    }
+                   is ResultState.Error ->{
+                       _getProductByIDState.value= GetProductByIdStateQ(error = it.message.toString(),isloading = false)
+
+                   }
+                    is ResultState.Sucess->{
+                        _getProductByIDState.value=GetProductByIdStateQ(isloading = false, data = it.data)
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    fun  getReelsMappedWithProductID(){
+        viewModelScope.launch {
+            repository. getReelsMappedWithProductID().collectLatest {
+                when(it){
+                    is ResultState.Loading->{
+                        _getReelsMappedWithProductIDState.value= GetReelsMappedWithProductIDState(isloading = true)
+                    }
+                    is ResultState.Error->{
+                        _getReelsMappedWithProductIDState.value=
+                            GetReelsMappedWithProductIDState(error = it.message, isloading = false)
+                    }
+                    is ResultState.Sucess->{
+                        _getReelsMappedWithProductIDState.value=GetReelsMappedWithProductIDState(isloading = false, data = it.data)
+                    }
+
+                }
+
+            }
+
+        }
+
     }
 
 }

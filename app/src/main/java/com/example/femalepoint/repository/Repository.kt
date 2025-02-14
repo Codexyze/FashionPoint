@@ -473,18 +473,22 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
         }
 
     }
-    suspend fun getReelsMappedWithProductID():Flow<ResultState<ReelsWithProductRefrence>> = callbackFlow {
+    suspend fun getReelsMappedWithProductID(): Flow<ResultState<List<ReelsWithProductRefrence>>> = callbackFlow {
         trySend(ResultState.Loading)
-        firebaseinstance.collection(Constants.REELSREFRENCE).document().get().addOnSuccessListener {
-            val data =it.toObject(ReelsWithProductRefrence::class.java)
-            trySend(ResultState.Sucess(data!!))
-        }.addOnFailureListener {
-            trySend(ResultState.Error(it.message.toString()))
-        }
-        awaitClose {
-            close()
-        }
+        val subscription = firebaseinstance.collection(Constants.REELSREFRENCE).get().addOnSuccessListener { querySnapshot ->
+                val reelsList = querySnapshot.documents.mapNotNull { doc ->
+                    doc.toObject(ReelsWithProductRefrence::class.java)
+                }
+                trySend(ResultState.Sucess(reelsList))
+            }.addOnFailureListener { exception ->
+                trySend(ResultState.Error(exception.message.toString()))
+            }
+      awaitClose {
+          close()
+      }
+
     }
+
 
 
 }

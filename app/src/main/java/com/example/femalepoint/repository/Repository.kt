@@ -9,6 +9,7 @@ import com.example.femalepoint.data.OrderDetails
 import com.example.femalepoint.data.Product
 import com.example.femalepoint.data.ProfilePicture
 import com.example.femalepoint.data.Reels
+import com.example.femalepoint.data.ReelsWithProductRefrence
 import com.example.femalepoint.data.ReviewDetails
 import com.example.femalepoint.data.Userdata
 import com.example.femalepoint.data.UsersDetails
@@ -472,6 +473,20 @@ class Repository @Inject constructor(private val firebaseinstance:FirebaseFirest
         }
 
     }
+    suspend fun getReelsMappedWithProductID():Flow<ResultState<ReelsWithProductRefrence>> = callbackFlow {
+        trySend(ResultState.Loading)
+        firebaseinstance.collection(Constants.REELSREFRENCE).document().get().addOnSuccessListener {
+            val data =it.toObject(ReelsWithProductRefrence::class.java)
+            trySend(ResultState.Sucess(data!!))
+        }.addOnFailureListener {
+            trySend(ResultState.Error(it.message.toString()))
+        }
+        awaitClose {
+            close()
+        }
+    }
+
+
 }
 
 

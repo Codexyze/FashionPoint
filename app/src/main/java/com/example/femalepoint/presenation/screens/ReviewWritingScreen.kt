@@ -2,6 +2,7 @@ package com.example.femalepoint.presenation.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,9 +11,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -69,6 +74,17 @@ fun ReviewWritingAndUploadingScreen(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
+        OutlinedTextField(
+            value = userName.value,
+            onValueChange = { userName.value = it },
+            placeholder = { Text("Enter your name") },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp)
+        )
+
+
+
+        Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
             value = review.value,
@@ -79,17 +95,37 @@ fun ReviewWritingAndUploadingScreen(
             maxLines = 5
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
-
-        OutlinedTextField(
-            value = userName.value,
-            onValueChange = { userName.value = it },
-            placeholder = { Text("Enter your name") },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(8.dp)
-        )
-
         Spacer(modifier = Modifier.height(16.dp))
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            IconButton(onClick = {
+
+            }) {
+                Icon(imageVector = Icons.Default.Star, contentDescription = null, tint = Color.Yellow)
+            }
+            IconButton(onClick = {
+
+            }) {
+                Icon(imageVector = Icons.Default.Star, contentDescription = null)
+            }
+            IconButton(onClick = {
+
+            }) {
+                Icon(imageVector = Icons.Default.Star, contentDescription = null)
+            }
+            IconButton(onClick = {
+
+            }) {
+                Icon(imageVector = Icons.Default.Star, contentDescription = null)
+            }
+            IconButton(onClick = {
+
+            }) {
+                Icon(imageVector = Icons.Default.Star, contentDescription = null)
+            }
+
+        }
+
+
 
         Button(
             onClick = {

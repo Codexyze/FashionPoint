@@ -18,26 +18,21 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.femalepoint.FiraSansFamily
 import com.example.femalepoint.data.ReviewDetails
-import com.example.femalepoint.presenation.commonutils.LoadingBar
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.shashank.sony.fancytoastlib.FancyToast
@@ -56,6 +51,7 @@ fun ReviewWritingAndUploadingScreen(
     val userName = remember { mutableStateOf("") }
     val reviewUploadState = viewModel.reviewDetailsUpload.collectAsState()
     val userID=FirebaseAuth.getInstance().currentUser?.uid.toString()
+    val startRating = remember { mutableStateOf(0) }
 
 
 
@@ -98,29 +94,59 @@ fun ReviewWritingAndUploadingScreen(
         Spacer(modifier = Modifier.height(16.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             IconButton(onClick = {
+                startRating.value=1
 
             }) {
-                Icon(imageVector = Icons.Default.Star, contentDescription = null, tint = Color.Yellow)
+                Icon(imageVector = Icons.Default.Star, contentDescription = null,
+                    tint = if(startRating.value>=1){
+                        Color.Yellow
+                    }else{
+                        Color.Gray
+                    })
             }
             IconButton(onClick = {
+                startRating.value=2
 
             }) {
-                Icon(imageVector = Icons.Default.Star, contentDescription = null)
+                Icon(imageVector = Icons.Default.Star, contentDescription = null,
+                    tint = if(startRating.value>=2){
+                        Color.Yellow
+                    }else{
+                        Color.Gray
+                    }
+                    )
             }
             IconButton(onClick = {
+                startRating.value=3
 
             }) {
-                Icon(imageVector = Icons.Default.Star, contentDescription = null)
+                Icon(imageVector = Icons.Default.Star, contentDescription = null,
+                    tint = if(startRating.value>=3){
+                        Color.Yellow
+                    }else{
+                        Color.Gray
+                    })
             }
             IconButton(onClick = {
-
+                 startRating.value=4
             }) {
-                Icon(imageVector = Icons.Default.Star, contentDescription = null)
+                Icon(imageVector = Icons.Default.Star, contentDescription = null,
+                    tint = if(startRating.value>=4){
+                        Color.Yellow
+                    }else{
+                        Color.Gray
+                    })
             }
             IconButton(onClick = {
+                startRating.value=5
 
             }) {
-                Icon(imageVector = Icons.Default.Star, contentDescription = null)
+                Icon(imageVector = Icons.Default.Star, contentDescription = null,
+                    tint = if(startRating.value>=5){
+                        Color.Yellow
+                    }else{
+                        Color.Gray
+                    })
             }
 
         }
@@ -129,12 +155,13 @@ fun ReviewWritingAndUploadingScreen(
 
         Button(
             onClick = {
-                if (review.value.isNotEmpty() && userName.value.isNotEmpty()) {
+
+                if (review.value.isNotEmpty() && userName.value.isNotEmpty()&&startRating.value!=0) {
                     val reviewObject = ReviewDetails(
                         productID = productID,
                         imageUrl = imageUrl,
                         review = review.value,
-                        rating = 0,
+                        rating = startRating.value,
                         category = category,
                         productName = productname,
                         userName = userName.value,
@@ -154,7 +181,7 @@ fun ReviewWritingAndUploadingScreen(
                     ).show()
                 } else {
                     FancyToast.makeText(
-                        context, "Please fill in all fields",
+                        context, "Please fill in all Review",
                         FancyToast.LENGTH_LONG,
                         FancyToast.WARNING, false
                     ).show()

@@ -13,9 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.compose.rememberNavController
 import com.example.femalepoint.navigation.HomeScreen
+import com.example.femalepoint.presenation.screens.LoginScreen
 import com.example.femalepoint.presenation.screens.NoReviewScreen
 import com.example.femalepoint.presenation.screens.ProfileScreen
+import com.example.femalepoint.presenation.screens.SingUpScreen
 
 
 import com.example.femalepoint.ui.theme.FemalePointTheme
@@ -40,8 +43,6 @@ class MainActivity : ComponentActivity(),PaymentResultListener {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                   Box(modifier = Modifier.padding(top = innerPadding.calculateTopPadding())) {
                       HomeScreen()
-
-
                   }
                 }
                 }

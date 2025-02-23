@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.compose.rememberNavController
 import com.example.femalepoint.navigation.HomeScreen
+import com.example.femalepoint.presenation.screens.ErrorScreen
 import com.example.femalepoint.presenation.screens.LoginScreen
 import com.example.femalepoint.presenation.screens.NoReviewScreen
 import com.example.femalepoint.presenation.screens.ProfileScreen

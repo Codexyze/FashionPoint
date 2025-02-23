@@ -21,19 +21,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.femalepoint.R
 
-//@Composable
-//fun ErrorScreen(){
-//    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally
-//    , ) {
-//        Spacer(modifier = Modifier.height(25.dp))
-//        Image(painter = painterResource(id = R.drawable.errorlogo), contentDescription = "Error"
-//        , modifier = Modifier.fillMaxWidth(0.9f)
-//        )
-//        Spacer(Modifier.height(25.dp))
-//        Text("Something went wrong", modifier = Modifier.fillMaxWidth(0.9f))
-//    }
-//
-//
 @Composable
 fun ErrorScreen() {
     Box(
@@ -46,7 +33,7 @@ fun ErrorScreen() {
                 .fillMaxWidth()
                 .padding(16.dp)
                ,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
         ) {
             Spacer(modifier = Modifier.height(24.dp))
             Image(
@@ -59,10 +46,7 @@ fun ErrorScreen() {
             Spacer(Modifier.height(16.dp))
             Text(
                 text = "Something went wrong",
-                style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+
             )
             Spacer(Modifier.height(8.dp))
 

@@ -3,7 +3,6 @@ package com.example.female
 import com.example.femalepoint.presenation.screens.ErrorScreen
 import android.Manifest
 import android.content.pm.PackageManager
-import android.os.Build
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -80,18 +79,6 @@ fun AddUserDataScreen(navController: NavController,viewModel: MyViewModel= hiltV
      permissionState.value = ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
     LaunchedEffect(Unit) {
         viewModel.getUserDetailsForOrder()
-//        data?.let {
-//            name.value = it.name ?: ""
-//            email.value = it.email ?: ""
-//            age.value = it.age ?: ""
-//            adress.value = it.address ?: ""
-//            phonenumber.value = it.phonenumber ?: ""
-//            phonenumber2.value = it.phonenumber2 ?: ""
-//            pincode.value = it.pincode ?: ""
-//            state.value = it.state ?: ""
-//            nearbyPoints.value = it.nearbyPoints ?: ""
-//            Log.d("DATAAAA",it.toString())
-//        }
         if (permissionState.value){
             createChannel(context = context)
 

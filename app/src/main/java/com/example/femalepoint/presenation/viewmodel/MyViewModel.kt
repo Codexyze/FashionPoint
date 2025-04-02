@@ -35,7 +35,7 @@ import com.example.femalepoint.data.getCategorgy
 import com.example.femalepoint.data.getProduct
 import com.example.femalepoint.data.getProductByIdState
 import com.example.femalepoint.data.userState
-import com.example.femalepoint.repository.Repository
+import com.example.femalepoint.data.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

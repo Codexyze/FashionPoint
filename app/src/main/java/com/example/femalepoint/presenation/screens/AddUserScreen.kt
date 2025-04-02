@@ -40,8 +40,8 @@ import com.example.femalepoint.LocalNotification.pushPaymentSucessfulNotificatio
 import com.example.femalepoint.R
 import com.example.femalepoint.data.OrderDetails
 import com.example.femalepoint.data.UsersDetails
-import com.example.femalepoint.navigation.HOMESCREEN
-import com.example.femalepoint.navigation.ORDERSCREEN
+import com.example.femalepoint.presenation.navigation.HOMESCREEN
+import com.example.femalepoint.presenation.navigation.ORDERSCREEN
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 import com.shashank.sony.fancytoastlib.FancyToast
 

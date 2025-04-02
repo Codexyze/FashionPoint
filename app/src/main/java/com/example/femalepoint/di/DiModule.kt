@@ -1,7 +1,7 @@
 package com.example.femalepoint.di
 
 
-import com.example.femalepoint.repository.Repository
+import com.example.femalepoint.data.repository.Repository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module

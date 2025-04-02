@@ -1,4 +1,4 @@
-package com.example.femalepoint.navigation
+package com.example.femalepoint.presenation.navigation
 
 import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues

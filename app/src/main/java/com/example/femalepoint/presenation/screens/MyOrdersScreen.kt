@@ -1,9 +1,7 @@
 package com.example.femalepoint.presenation.screens
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,7 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
-import com.example.femalepoint.navigation.ORDERHISTORYDETAILS
+import com.example.femalepoint.presenation.navigation.ORDERHISTORYDETAILS
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 

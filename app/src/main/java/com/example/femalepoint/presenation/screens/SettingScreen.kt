@@ -37,11 +37,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.femalepoint.constants.Constants
-import com.example.femalepoint.navigation.CARTSCREEN
-import com.example.femalepoint.navigation.EXPENSETRACKINGSCREEN
-import com.example.femalepoint.navigation.PRIVACYPOLICYSCREEN
-import com.example.femalepoint.navigation.PROFILESCREEN
-import com.example.femalepoint.navigation.REELSVIDEOSCREEN
+import com.example.femalepoint.presenation.navigation.CARTSCREEN
+import com.example.femalepoint.presenation.navigation.EXPENSETRACKINGSCREEN
+import com.example.femalepoint.presenation.navigation.PRIVACYPOLICYSCREEN
+import com.example.femalepoint.presenation.navigation.PROFILESCREEN
+import com.example.femalepoint.presenation.navigation.REELSVIDEOSCREEN
 import com.shashank.sony.fancytoastlib.FancyToast
 
 @Composable

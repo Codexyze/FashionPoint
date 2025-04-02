@@ -1,4 +1,4 @@
-package com.example.femalepoint.navigation
+package com.example.femalepoint.presenation.navigation
 
 import kotlinx.serialization.Serializable
 

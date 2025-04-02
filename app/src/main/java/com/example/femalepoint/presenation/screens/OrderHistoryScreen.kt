@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -31,9 +30,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
-import com.example.femalepoint.FiraSansFamily
 import com.example.femalepoint.R
-import com.example.femalepoint.navigation.ReviewWritingScreen
+import com.example.femalepoint.presenation.navigation.ReviewWritingScreen
 import com.example.femalepoint.presenation.commonutils.LoadingBar
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 

@@ -1,4 +1,4 @@
-package com.example.femalepoint.repository
+package com.example.femalepoint.data.repository
 
 import android.net.Uri
 import android.util.Log

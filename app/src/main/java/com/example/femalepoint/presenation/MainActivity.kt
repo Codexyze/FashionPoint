@@ -1,4 +1,4 @@
-package com.example.femalepoint
+package com.example.femalepoint.presenation
 
 import android.os.Bundle
 import android.widget.Toast
@@ -13,8 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import com.example.femalepoint.R
 
-import com.example.femalepoint.navigation.HomeScreen
+import com.example.femalepoint.presenation.navigation.HomeScreen
 
 import com.example.femalepoint.ui.theme.FemalePointTheme
 import com.razorpay.PaymentResultListener

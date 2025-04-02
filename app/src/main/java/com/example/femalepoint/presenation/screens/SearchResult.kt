@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
-import com.example.femalepoint.navigation.ORDERSCREEN
+import com.example.femalepoint.presenation.navigation.ORDERSCREEN
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 import com.shashank.sony.fancytoastlib.FancyToast
 

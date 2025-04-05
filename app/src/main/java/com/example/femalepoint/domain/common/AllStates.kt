@@ -1,4 +1,13 @@
-package com.example.femalepoint.data
+package com.example.femalepoint.domain.common
+
+import com.example.femalepoint.data.model.Category
+import com.example.femalepoint.data.model.OrderDetails
+import com.example.femalepoint.data.model.Product
+import com.example.femalepoint.data.model.ProfilePicture
+import com.example.femalepoint.data.model.Reels
+import com.example.femalepoint.data.model.ReelsWithProductRefrence
+import com.example.femalepoint.data.model.ReviewDetails
+import com.example.femalepoint.data.model.Userdata
 
 data class getCategorgy(
     val error:String="",
@@ -89,7 +98,7 @@ data class StoreUserDataForOrderState(
 )
 data class UserDataStoreState(
     val error: String="",
-    val data:Userdata?=null,
+    val data: Userdata?=null,
     val isloading: Boolean=false
 )
 
@@ -119,7 +128,7 @@ data class ProfileUserDataState(
 
 data class GetProductByIdStateQ(
     val error: String="",
-    val data:Product?=null,
+    val data: Product?=null,
     val isloading: Boolean=false
 )
 

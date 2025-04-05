@@ -32,7 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.femalepoint.data.ReviewDetails
+import com.example.femalepoint.data.model.ReviewDetails
 import com.example.femalepoint.presenation.viewmodel.MyViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.shashank.sony.fancytoastlib.FancyToast

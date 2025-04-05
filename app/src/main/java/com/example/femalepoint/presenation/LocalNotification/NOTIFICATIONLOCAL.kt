@@ -1,4 +1,4 @@
-package com.example.femalepoint.LocalNotification
+package com.example.femalepoint.presenation.LocalNotification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

@@ -1,4 +1,4 @@
-package com.example.femalepoint.data
+package com.example.femalepoint.data.model
 
 data class Userdata(
     val id: String?=null,
@@ -12,5 +12,3 @@ data class Userdata(
     val age: String?=null,
     val nearbyPoints: String?=null
 )
-
-

@@ -29,7 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.example.femalepoint.presenation.FiraSansFamily
-import com.example.femalepoint.data.Product
+import com.example.femalepoint.data.model.Product
 import com.example.femalepoint.presenation.navigation.ALLREVIVEWSCREEN
 import com.example.femalepoint.presenation.navigation.POSTORDERSCREEN
 import com.example.femalepoint.presenation.commonutils.LoadingBar

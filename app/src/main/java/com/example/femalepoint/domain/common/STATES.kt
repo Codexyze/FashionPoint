@@ -1,4 +1,4 @@
-package com.example.femalepoint.common
+package com.example.femalepoint.domain.common
 
 sealed class ResultState<out t>{
     data class Sucess<T>(val data:T):ResultState<T>()

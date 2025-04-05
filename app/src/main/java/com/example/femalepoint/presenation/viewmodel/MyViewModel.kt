@@ -3,38 +3,38 @@ package com.example.femalepoint.presenation.viewmodel
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.femalepoint.common.ResultState
-import com.example.femalepoint.common.ResultState.Error
-import com.example.femalepoint.data.AddToCartState
-import com.example.femalepoint.data.AddUserState
-import com.example.femalepoint.data.AllReviewDetailsState
-import com.example.femalepoint.data.AuthState
-import com.example.femalepoint.data.GetAllCartItemsState
-import com.example.femalepoint.data.GetAllProductsWithoutLimitState
-import com.example.femalepoint.data.GetMatchingState
-import com.example.femalepoint.data.GetProductByIdStateQ
-import com.example.femalepoint.data.GetProfilePictureAfterUpdateState
-import com.example.femalepoint.data.GetProfilePictureByUserIDState
-import com.example.femalepoint.data.GetReelsMappedWithProductIDState
-import com.example.femalepoint.data.OrderDetails
-import com.example.femalepoint.data.OrderProductState
-import com.example.femalepoint.data.OrderState
-import com.example.femalepoint.data.Product
-import com.example.femalepoint.data.ProfileUpdateState
-import com.example.femalepoint.data.ProfileUserDataState
-import com.example.femalepoint.data.ReelsState
-import com.example.femalepoint.data.ReviewDeatailsUploadState
-import com.example.femalepoint.data.ReviewDetails
-import com.example.femalepoint.data.SearchProductState
-import com.example.femalepoint.data.StoreUserDataForOrderState
-import com.example.femalepoint.data.UpdateStockState
-import com.example.femalepoint.data.UserDataStoreState
-import com.example.femalepoint.data.Userdata
-import com.example.femalepoint.data.UsersDetails
-import com.example.femalepoint.data.getCategorgy
-import com.example.femalepoint.data.getProduct
-import com.example.femalepoint.data.getProductByIdState
-import com.example.femalepoint.data.userState
+import com.example.femalepoint.domain.common.ResultState
+import com.example.femalepoint.domain.common.ResultState.Error
+import com.example.femalepoint.domain.common.AddToCartState
+import com.example.femalepoint.domain.common.AddUserState
+import com.example.femalepoint.domain.common.AllReviewDetailsState
+import com.example.femalepoint.domain.common.AuthState
+import com.example.femalepoint.domain.common.GetAllCartItemsState
+import com.example.femalepoint.domain.common.GetAllProductsWithoutLimitState
+import com.example.femalepoint.domain.common.GetMatchingState
+import com.example.femalepoint.domain.common.GetProductByIdStateQ
+import com.example.femalepoint.domain.common.GetProfilePictureAfterUpdateState
+import com.example.femalepoint.domain.common.GetProfilePictureByUserIDState
+import com.example.femalepoint.domain.common.GetReelsMappedWithProductIDState
+import com.example.femalepoint.data.model.OrderDetails
+import com.example.femalepoint.domain.common.OrderProductState
+import com.example.femalepoint.domain.common.OrderState
+import com.example.femalepoint.data.model.Product
+import com.example.femalepoint.domain.common.ProfileUpdateState
+import com.example.femalepoint.domain.common.ProfileUserDataState
+import com.example.femalepoint.domain.common.ReelsState
+import com.example.femalepoint.domain.common.ReviewDeatailsUploadState
+import com.example.femalepoint.data.model.ReviewDetails
+import com.example.femalepoint.domain.common.SearchProductState
+import com.example.femalepoint.domain.common.StoreUserDataForOrderState
+import com.example.femalepoint.domain.common.UpdateStockState
+import com.example.femalepoint.domain.common.UserDataStoreState
+import com.example.femalepoint.data.model.Userdata
+import com.example.femalepoint.data.model.UsersDetails
+import com.example.femalepoint.domain.common.getCategorgy
+import com.example.femalepoint.domain.common.getProduct
+import com.example.femalepoint.domain.common.getProductByIdState
+import com.example.femalepoint.domain.common.userState
 import com.example.femalepoint.data.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -595,7 +595,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                     is ResultState.Loading->{
                         _getProductByIDState.value=GetProductByIdStateQ(isloading = true)
                     }
-                   is ResultState.Error ->{
+                   is Error ->{
                        _getProductByIDState.value= GetProductByIdStateQ(error = it.message.toString(),isloading = false)
 
                    }
@@ -616,7 +616,7 @@ class MyViewModel @Inject constructor(private val repository: Repository):ViewMo
                     is ResultState.Loading->{
                         _getReelsMappedWithProductIDState.value= GetReelsMappedWithProductIDState(isloading = true)
                     }
-                    is ResultState.Error->{
+                    is Error->{
                         _getReelsMappedWithProductIDState.value=
                             GetReelsMappedWithProductIDState(error = it.message, isloading = false)
                     }

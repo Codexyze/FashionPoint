@@ -1,4 +1,4 @@
-package com.example.femalepoint.data
+package com.example.femalepoint.data.model
 
 import kotlinx.serialization.Serializable
 
@@ -15,4 +15,3 @@ data class Product(
     val noOfUnits: Int=0,
     val productid : String=""
 )
-

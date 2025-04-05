@@ -35,11 +35,11 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.femalepoint.LocalNotification.createChannel
-import com.example.femalepoint.LocalNotification.pushPaymentSucessfulNotification
+import com.example.femalepoint.presenation.LocalNotification.createChannel
+import com.example.femalepoint.presenation.LocalNotification.pushPaymentSucessfulNotification
 import com.example.femalepoint.R
-import com.example.femalepoint.data.OrderDetails
-import com.example.femalepoint.data.UsersDetails
+import com.example.femalepoint.data.model.OrderDetails
+import com.example.femalepoint.data.model.UsersDetails
 import com.example.femalepoint.presenation.navigation.HOMESCREEN
 import com.example.femalepoint.presenation.navigation.ORDERSCREEN
 import com.example.femalepoint.presenation.viewmodel.MyViewModel

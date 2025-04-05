@@ -1,4 +1,4 @@
-package com.example.femalepoint.data
+package com.example.femalepoint.data.model
 
 data class ProfilePicture(
     val userID:String?=null,

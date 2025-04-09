@@ -50,6 +50,7 @@ Here are some screenshots of the app:
 - **Local Notifications**: Stay updated with local notifications.
 - **Toast Messages**: Receive instant feedback with toast messages.
 - **Payment Gateway**: Tried to add payment gateway but was not sucessful due to lack of gst account.
+- **Monthly Budget Calculation** : Life time budget expenditure and monthly budget tracker inbuilt. 
 ## Technologies Used
 
 - **[Jetpack Compose](https://developer.android.com/jetpack/compose)**: For building a modern UI.
